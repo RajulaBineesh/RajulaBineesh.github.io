@@ -9,84 +9,138 @@
     <!-- FontAwesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --light-bg: #f8fafc;
-            --card-bg: #ffffff;
-            --primary-color: #3b82f6;
-            --primary-gradient: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
-            --text-dark: #0f172a;
-            --text-muted: #64748b;
-            --border-color: #e2e8f0;
+            --poster-pink: #d11fb7;
+            --poster-blue: #1fc1d1;
+            --poster-purple: #741fd1;
+            --background-dark: #07060f;
+            --card-dark: rgba(16, 14, 30, 0.85);
+            --border-glow: rgba(31, 193, 209, 0.25);
+            --text-light: #f8fafc;
+            --text-muted: #a0aec0;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--light-bg);
-            color: var(--text-dark);
+            background-color: var(--background-dark);
+            color: var(--text-light);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(31, 193, 209, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(209, 31, 183, 0.08) 0%, transparent 40%);
         }
 
         h1, h2, h3, h4, .font-heading {
             font-family: 'Outfit', sans-serif;
         }
 
-        /* Navbar */
-        .navbar {
-            background: #ffffff;
-            border-bottom: 1px solid var(--border-color);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+        .brand-orbitron {
+            font-family: 'Orbitron', sans-serif;
         }
-        .navbar-brand {
+
+        /* Synapse Style Navigation Bar */
+        .top-nav {
+            background: rgba(7, 6, 15, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 12px 20px;
+        }
+
+        .nav-logo {
+            font-weight: 800;
+            font-size: clamp(1rem, 3.5vw, 1.35rem);
+            color: white;
+            text-decoration: none;
+            text-shadow: 0 0 12px rgba(31, 193, 209, 0.6);
+        }
+
+        .btn-neon-glow {
+            background: linear-gradient(135deg, var(--poster-blue), var(--poster-purple));
+            border: none;
+            padding: 10px 22px;
+            color: white;
             font-weight: 700;
-            color: var(--text-dark) !important;
+            border-radius: 12px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 18px rgba(31, 193, 209, 0.35);
         }
 
-        /* Light Cards */
-        .custom-card {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        .btn-neon-glow:hover {
+            box-shadow: 0 0 30px rgba(209, 31, 183, 0.6);
+            transform: translateY(-2px);
+            color: white;
         }
 
+        /* Frosted Glass Synapse Card */
+        .synapse-card {
+            background: var(--card-dark);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .synapse-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--poster-blue), var(--poster-pink), var(--poster-purple));
+        }
+
+        /* Form Inputs */
         .form-control, .form-select {
-            background-color: #f8fafc !important;
-            border: 1px solid var(--border-color);
-            color: #0f172a !important;
-            padding: 0.75rem 1rem;
+            background-color: rgba(10, 9, 22, 0.8) !important;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #ffffff !important;
+            padding: 0.85rem 1rem;
             border-radius: 12px;
             transition: all 0.3s ease;
         }
 
         .form-control:focus, .form-select:focus {
-            border-color: #2563eb;
-            background-color: #ffffff !important;
-            box-shadow: 0 0 0 0.25rem rgba(37, 99, 235, 0.15);
+            border-color: var(--poster-blue);
+            box-shadow: 0 0 15px rgba(31, 193, 209, 0.3);
+            background-color: rgba(16, 14, 30, 0.95) !important;
         }
 
-        /* Interactive Transport Cards with Animated Movements */
+        .form-select option {
+            background-color: #0c0a1a;
+            color: #ffffff;
+        }
+
+        /* Animated Interactive Transport Selection Cards */
         .transport-card {
-            background: #ffffff;
-            border: 2px solid var(--border-color);
-            border-radius: 16px;
-            padding: 1.25rem;
+            background: rgba(12, 10, 24, 0.7);
+            border: 2px solid rgba(255, 255, 255, 0.12);
+            border-radius: 18px;
+            padding: 1.25rem 0.8rem;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
+            user-select: none;
         }
 
         .transport-card:hover {
             transform: translateY(-8px) scale(1.02);
-            border-color: #2563eb;
-            box-shadow: 0 12px 25px rgba(37, 99, 235, 0.12);
+            border-color: var(--poster-blue);
+            box-shadow: 0 10px 25px rgba(31, 193, 209, 0.25);
+            background: rgba(31, 193, 209, 0.1);
         }
 
         .transport-card input[type="radio"] {
@@ -96,33 +150,39 @@
         }
 
         .transport-card.selected {
-            border-color: #2563eb;
-            background: #eff6ff;
-            box-shadow: 0 0 20px rgba(37, 99, 235, 0.2);
+            border-color: var(--poster-pink);
+            background: rgba(209, 31, 183, 0.18);
+            box-shadow: 0 0 25px rgba(209, 31, 183, 0.45);
             transform: translateY(-4px) scale(1.03);
         }
 
         .transport-icon {
-            font-size: 2.4rem;
+            font-size: clamp(2rem, 5vw, 2.5rem);
             margin-bottom: 0.5rem;
-            color: #2563eb;
-            transition: transform 0.4s ease;
+            color: var(--poster-blue);
+            transition: transform 0.4s ease, color 0.3s ease;
+            text-shadow: 0 0 12px rgba(31, 193, 209, 0.5);
+        }
+
+        .transport-card.selected .transport-icon {
+            color: var(--poster-pink);
+            text-shadow: 0 0 15px rgba(209, 31, 183, 0.7);
         }
 
         .transport-card:hover .transport-icon {
-            transform: scale(1.15) rotate(5deg);
+            transform: scale(1.18) rotate(6deg);
         }
 
-        /* Bus Number Container Animation */
+        /* Bus Field Dynamic Animation */
         #bus-details-container {
             display: none;
-            animation: slideDownFade 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: pulseGlowIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        @keyframes slideDownFade {
+        @keyframes pulseGlowIn {
             from {
                 opacity: 0;
-                transform: translateY(-15px);
+                transform: translateY(-12px);
             }
             to {
                 opacity: 1;
@@ -130,61 +190,69 @@
             }
         }
 
-        .btn-submit {
-            background: var(--primary-gradient);
-            color: white;
-            border: none;
-            padding: 0.9rem 2rem;
-            border-radius: 14px;
-            font-weight: 700;
-            font-size: 1.1rem;
-            box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
-            transition: all 0.3s ease;
+        /* Title Glow Header */
+        .text-glow-blue {
+            color: var(--poster-blue);
+            text-shadow: 0 0 15px rgba(31, 193, 209, 0.5);
         }
 
-        .btn-submit:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 30px rgba(37, 99, 235, 0.45);
-            color: white;
+        .text-glow-pink {
+            color: var(--poster-pink);
+            text-shadow: 0 0 15px rgba(209, 31, 183, 0.5);
         }
 
         /* Footer */
         footer {
-            border-top: 1px solid var(--border-color);
-            background: #ffffff;
+            border-top: 1px solid var(--border-glow);
+            background: rgba(7, 6, 15, 0.95);
+        }
+
+        @media (max-width: 576px) {
+            .synapse-card {
+                padding: 1.5rem 1rem !important;
+                border-radius: 18px;
+            }
+            .transport-card {
+                padding: 1rem 0.5rem;
+            }
         }
     </style>
 </head>
 <body>
 
-    <!-- Light Theme Navbar -->
-    <nav class="navbar navbar-expand-lg sticky-top">
-        <div class="container">
-            <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
-                <i class="fa-solid fa-graduation-cap text-primary fs-4"></i> 
+    <!-- Synapse Navigation Bar -->
+    <nav class="top-nav sticky-top">
+        <div class="container d-flex justify-content-between align-items-center">
+            <a class="nav-logo brand-orbitron d-flex align-items-center gap-2" href="index.html">
+                <i class="fa-solid fa-graduation-cap text-glow-blue"></i>
                 <div>
-                    <span class="fw-bold d-block leading-none">SABTMHSS THAYINERI</span>
-                    <small class="text-muted fw-normal fs-7" style="font-size: 0.75rem;">Rajula Bineesh — Mathematics Department</small>
+                    <span class="d-block leading-none">SABTMHSS THAYINERI</span>
+                    <small class="text-muted fw-normal d-none d-sm-block fs-7" style="font-size: 0.75rem;">Student Transport Data Portal</small>
                 </div>
             </a>
-            <div class="ms-auto">
-                <a href="index.html" class="btn btn-outline-primary btn-sm rounded-pill px-3 fw-semibold">
-                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Main Site
+            <div>
+                <a href="index.html" class="btn btn-outline-light btn-sm rounded-pill px-3 me-2 border-opacity-25">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Home
+                </a>
+                <a href="admin.html" class="btn btn-neon-glow btn-sm">
+                    <i class="fa-solid fa-chart-line me-1"></i> Admin
                 </a>
             </div>
         </div>
     </nav>
 
-    <!-- Header Section -->
-    <div class="container my-5">
+    <!-- Header Title Section -->
+    <div class="container my-4 my-md-5">
         <div class="row justify-content-center text-center">
-            <div class="col-lg-8">
-                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-2 rounded-pill fw-semibold mb-3 fs-6">
+            <div class="col-lg-9">
+                <span class="badge rounded-pill px-3 py-2 fw-bold mb-3" style="background: rgba(31, 193, 209, 0.15); border: 1px solid rgba(31, 193, 209, 0.3); color: var(--poster-blue);">
                     <i class="fa-solid fa-school me-2"></i> SABTMHSS THAYINERI
                 </span>
-                <h1 class="fw-bold display-5 mb-2 text-dark">Student Transport Data Collection</h1>
-                <p class="text-muted fs-5">
-                    Official Commute Survey for Students of SABTMHSS THAYINERI
+                <h1 class="fw-bold display-5 mb-2 text-white">
+                    Student Transport <span class="text-glow-blue">Data Collection</span>
+                </h1>
+                <p class="text-muted fs-6 fs-md-5">
+                    Official Daily Commute Survey for SABTMHSS THAYINERI Students
                 </p>
             </div>
         </div>
@@ -192,33 +260,33 @@
         <!-- Survey Form -->
         <div class="row justify-content-center mt-3">
             <div class="col-lg-8">
-                <div class="custom-card p-4 p-md-5">
+                <div class="synapse-card p-4 p-md-5">
                     <form id="transportForm" onsubmit="submitTransportData(event)">
                         
                         <!-- Student Profile Header -->
-                        <div class="d-flex align-items-center gap-2 mb-4 pb-2 border-bottom border-light-subtle">
-                            <div class="p-2 bg-primary bg-opacity-10 text-primary rounded-3">
+                        <div class="d-flex align-items-center gap-2 mb-4 pb-2 border-bottom border-secondary border-opacity-25">
+                            <div class="p-2 rounded-3 text-glow-blue" style="background: rgba(31, 193, 209, 0.15);">
                                 <i class="fa-solid fa-id-card fs-4"></i>
                             </div>
-                            <h4 class="fw-bold mb-0 text-dark">Student Information</h4>
+                            <h4 class="fw-bold mb-0 text-white font-heading">Student Information</h4>
                         </div>
 
                         <div class="row g-3 mb-4">
                             <!-- Student Name -->
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold text-dark">Full Name <span class="text-danger">*</span></label>
+                                <label class="form-label fw-semibold text-light">Full Name <span class="text-danger">*</span></label>
                                 <input type="text" id="studentName" class="form-control" placeholder="Enter student's full name" required>
                             </div>
 
                             <!-- Roll Number -->
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold text-dark">Roll Number <span class="text-danger">*</span></label>
+                                <label class="form-label fw-semibold text-light">Roll Number <span class="text-danger">*</span></label>
                                 <input type="text" id="rollNo" class="form-control" placeholder="Enter roll number" required>
                             </div>
 
                             <!-- Class / Grade -->
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold text-dark">Class / Grade <span class="text-danger">*</span></label>
+                                <label class="form-label fw-semibold text-light">Class / Grade <span class="text-danger">*</span></label>
                                 <select id="classGrade" class="form-select" required>
                                     <option value="" disabled selected>Select Class</option>
                                     <option value="Grade 8">Grade 8</option>
@@ -231,7 +299,7 @@
 
                             <!-- Division -->
                             <div class="col-md-6">
-                                <label class="form-label fw-semibold text-dark">Division / Section <span class="text-danger">*</span></label>
+                                <label class="form-label fw-semibold text-light">Division / Section <span class="text-danger">*</span></label>
                                 <select id="division" class="form-select" required>
                                     <option value="" disabled selected>Select Division</option>
                                     <option value="A">Division A</option>
@@ -243,22 +311,23 @@
                             </div>
                         </div>
 
-                        <!-- Transport Selection -->
-                        <div class="d-flex align-items-center gap-2 mb-3 pt-3 border-top border-light-subtle">
-                            <div class="p-2 bg-info bg-opacity-10 text-info rounded-3">
+                        <!-- Transport Selection Header -->
+                        <div class="d-flex align-items-center gap-2 mb-3 pt-3 border-top border-secondary border-opacity-25">
+                            <div class="p-2 rounded-3 text-glow-pink" style="background: rgba(209, 31, 183, 0.15);">
                                 <i class="fa-solid fa-route fs-4"></i>
                             </div>
-                            <h4 class="fw-bold mb-0 text-dark">Mode of Transport <span class="text-danger">*</span></h4>
+                            <h4 class="fw-bold mb-0 text-white font-heading">Mode of Transport <span class="text-danger">*</span></h4>
                         </div>
-                        <p class="text-muted small mb-4">Select how the student commutes to SABTMHSS THAYINERI every day:</p>
+                        <p class="text-muted small mb-4">Select how you commute to school every day:</p>
 
-                        <div class="row g-3 mb-4">
+                        <!-- Mobile Responsive Animated Transport Choice Grid -->
+                        <div class="row g-2 g-md-3 mb-4">
                             <!-- Option: Walking -->
                             <div class="col-6 col-md-3">
                                 <div class="transport-card" onclick="selectTransport('Walking', this)">
                                     <input type="radio" name="transportMode" value="Walking" required>
                                     <i class="fa-solid fa-person-walking transport-icon"></i>
-                                    <h6 class="fw-bold mb-0 mt-2 text-dark">Walking</h6>
+                                    <h6 class="fw-bold mb-0 mt-2 text-white">Walking</h6>
                                 </div>
                             </div>
 
@@ -266,8 +335,8 @@
                             <div class="col-6 col-md-3">
                                 <div class="transport-card" onclick="selectTransport('Cycle', this)">
                                     <input type="radio" name="transportMode" value="Cycle">
-                                    <i class="fa-solid fa-bicycle transport-icon text-success"></i>
-                                    <h6 class="fw-bold mb-0 mt-2 text-dark">Cycle</h6>
+                                    <i class="fa-solid fa-bicycle transport-icon"></i>
+                                    <h6 class="fw-bold mb-0 mt-2 text-white">Cycle</h6>
                                 </div>
                             </div>
 
@@ -275,8 +344,8 @@
                             <div class="col-6 col-md-3">
                                 <div class="transport-card" onclick="selectTransport('Private Vehicle', this)">
                                     <input type="radio" name="transportMode" value="Private Vehicle">
-                                    <i class="fa-solid fa-car transport-icon text-warning"></i>
-                                    <h6 class="fw-bold mb-0 mt-2 text-dark">Private Vehicle</h6>
+                                    <i class="fa-solid fa-car transport-icon"></i>
+                                    <h6 class="fw-bold mb-0 mt-2 text-white">Private Vehicle</h6>
                                 </div>
                             </div>
 
@@ -284,18 +353,18 @@
                             <div class="col-6 col-md-3">
                                 <div class="transport-card" onclick="selectTransport('School Bus', this)">
                                     <input type="radio" name="transportMode" value="School Bus">
-                                    <i class="fa-solid fa-bus-simple transport-icon text-primary"></i>
-                                    <h6 class="fw-bold mb-0 mt-2 text-dark">School Bus</h6>
+                                    <i class="fa-solid fa-bus-simple transport-icon"></i>
+                                    <h6 class="fw-bold mb-0 mt-2 text-white">School Bus</h6>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Conditional Bus Details Container -->
-                        <div id="bus-details-container" class="p-3 mb-4 rounded-3 border border-primary border-opacity-25 bg-primary bg-opacity-10">
-                            <label class="form-label fw-semibold text-primary">
+                        <!-- Dynamic Bus Number Container -->
+                        <div id="bus-details-container" class="p-3 mb-4 rounded-3" style="background: rgba(31, 193, 209, 0.12); border: 1px solid var(--border-glow);">
+                            <label class="form-label fw-semibold text-glow-blue">
                                 <i class="fa-solid fa-bus me-1"></i> Select Bus Number <span class="text-danger">*</span>
                             </label>
-                            <select id="busNumber" class="form-select bg-white">
+                            <select id="busNumber" class="form-select">
                                 <option value="" disabled selected>Select Bus Number</option>
                                 <option value="Bus 01">Bus No. 01 (North Route)</option>
                                 <option value="Bus 02">Bus No. 02 (East Route)</option>
@@ -309,8 +378,8 @@
 
                         <!-- Submit Button -->
                         <div class="mt-4">
-                            <button type="submit" id="submitBtn" class="btn btn-submit w-100 py-3">
-                                <i class="fa-solid fa-paper-plane me-2"></i> Submit Student Details
+                            <button type="submit" id="submitBtn" class="btn btn-neon-glow w-100 py-3 text-uppercase tracking-wider">
+                                <i class="fa-solid fa-paper-plane me-2"></i> Submit Response
                             </button>
                         </div>
 
@@ -324,10 +393,10 @@
         </div>
     </div>
 
-    <!-- Light Footer -->
-    <footer class="py-4 text-center text-muted border-top">
+    <!-- Synapse Dark Footer -->
+    <footer class="py-4 text-center text-muted">
         <div class="container">
-            <div class="small fw-medium">
+            <div class="small">
                 &copy; 2026 SABTMHSS THAYINERI — Student Data Management Portal
             </div>
         </div>
@@ -402,10 +471,13 @@
                 });
 
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Student Details';
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Response';
 
-                statusAlert.className = 'alert alert-success mt-4 rounded-3 p-3 shadow-sm';
-                statusAlert.innerHTML = '<i class="fa-solid fa-circle-check text-success me-2 fs-5"></i> <strong>Submission Successful!</strong> Thank you, student details have been recorded in the SABTMHSS THAYINERI transport register.';
+                statusAlert.className = 'alert alert-success mt-4 rounded-3 p-3 text-start';
+                statusAlert.style.backgroundColor = 'rgba(34, 197, 94, 0.2)';
+                statusAlert.style.borderColor = '#22c55e';
+                statusAlert.style.color = '#f8fafc';
+                statusAlert.innerHTML = '<i class="fa-solid fa-circle-check text-success me-2 fs-5"></i> <strong>Submission Successful!</strong> Thank you, student details have been recorded in the SABTMHSS THAYINERI database.';
                 statusAlert.classList.remove('d-none');
 
                 document.getElementById('transportForm').reset();
@@ -415,9 +487,9 @@
             } catch (err) {
                 console.error(err);
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Student Details';
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Response';
 
-                statusAlert.className = 'alert alert-danger mt-4 rounded-3 p-3 shadow-sm';
+                statusAlert.className = 'alert alert-danger mt-4 rounded-3 p-3 text-start';
                 statusAlert.innerHTML = '<i class="fa-solid fa-circle-exclamation me-2 fs-5"></i> Something went wrong submitting your response. Please try again.';
                 statusAlert.classList.remove('d-none');
             }
