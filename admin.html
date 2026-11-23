@@ -294,7 +294,9 @@
     <script>
         document.getElementById('print-date').innerText = new Date().toLocaleDateString();
 
-        // Sample Representative Dataset (~2000 Capacity Preview)
+        const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby-jEbxlr6-kKfhWggnhZBsdL-uIC6ODoHwAlM6tPrtatN0705YtIVReXJu865TM7RG/exec';
+
+        // Sample Representative Dataset (fallback/initial preview)
         let studentData = [
             { timestamp: '11/23/2026, 09:15 AM', studentName: 'Ananya Sharma', rollNo: '1001', classGrade: 'Grade 10', division: 'A', transportMode: 'School Bus', busNumber: 'Bus 01' },
             { timestamp: '11/23/2026, 09:18 AM', studentName: 'Rohan Verma', rollNo: '1002', classGrade: 'Grade 10', division: 'B', transportMode: 'Cycle', busNumber: 'N/A' },
@@ -305,6 +307,33 @@
             { timestamp: '11/23/2026, 09:40 AM', studentName: 'Kavya Rajesh', rollNo: '1007', classGrade: 'Grade 12', division: 'C', transportMode: 'School Bus', busNumber: 'Bus 05' },
             { timestamp: '11/23/2026, 09:45 AM', studentName: 'Arjun Das', rollNo: '1008', classGrade: 'Grade 9', division: 'A', transportMode: 'Cycle', busNumber: 'N/A' }
         ];
+
+        async function loadData() {
+            try {
+                const res = await fetch(GOOGLE_SCRIPT_URL);
+                const data = await res.json();
+                if (Array.isArray(data) && data.length > 0) {
+                    studentData = data;
+                    updateDashboardMetrics(studentData);
+                }
+            } catch (err) {
+                console.log('Using sample/cached dataset:', err);
+            }
+            renderTable(studentData);
+            updateCharts(studentData);
+        }
+
+        function updateDashboardMetrics(data) {
+            document.getElementById('stat-total').innerText = data.length;
+            
+            let busCount = data.filter(d => d.transportMode === 'School Bus').length;
+            let ecoCount = data.filter(d => d.transportMode === 'Walking' || d.transportMode === 'Cycle').length;
+            let privateCount = data.filter(d => d.transportMode === 'Private Vehicle').length;
+
+            document.getElementById('stat-bus').innerText = busCount;
+            document.getElementById('stat-walk').innerText = ecoCount;
+            document.getElementById('stat-private').innerText = privateCount;
+        }
 
         // Render Table
         function renderTable(data) {
@@ -422,10 +451,22 @@
             });
         }
 
+        function updateCharts(data) {
+            if (!pieChart || !barChart) return;
+
+            let bus = data.filter(d => d.transportMode === 'School Bus').length;
+            let walk = data.filter(d => d.transportMode === 'Walking').length;
+            let cycle = data.filter(d => d.transportMode === 'Cycle').length;
+            let pvt = data.filter(d => d.transportMode === 'Private Vehicle').length;
+
+            pieChart.data.datasets[0].data = [bus, walk, cycle, pvt];
+            pieChart.update();
+        }
+
         // Initial Load
         window.onload = function() {
-            renderTable(studentData);
             initCharts();
+            loadData();
         };
     </script>
 </body>
