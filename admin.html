@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard & Analytics | Rajula Bineesh</title>
+    <title>Admin Dashboard & Transport Analytics | SABTMHSS THAYINERI</title>
     <!-- Bootstrap 5 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- FontAwesome Icons -->
@@ -15,18 +15,18 @@
     
     <style>
         :root {
-            --dark-bg: #0f172a;
-            --card-bg: rgba(30, 41, 59, 0.85);
-            --primary-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
-            --border-color: rgba(255, 255, 255, 0.12);
-            --text-light: #f8fafc;
-            --text-muted: #94a3b8;
+            --light-bg: #f8fafc;
+            --card-bg: #ffffff;
+            --primary-gradient: linear-gradient(135deg, #2563eb 0%, #4f46e5 100%);
+            --border-color: #e2e8f0;
+            --text-dark: #0f172a;
+            --text-muted: #64748b;
         }
 
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: var(--dark-bg);
-            color: var(--text-light);
+            background-color: var(--light-bg);
+            color: var(--text-dark);
             min-height: 100vh;
         }
 
@@ -36,57 +36,60 @@
 
         /* Navbar */
         .navbar {
-            background: rgba(15, 23, 42, 0.95);
-            backdrop-filter: blur(16px);
+            background: #ffffff;
             border-bottom: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
         }
 
-        .glass-card {
-            background: var(--card-bg);
-            backdrop-filter: blur(16px);
+        .custom-card {
+            background: #ffffff;
             border: 1px solid var(--border-color);
             border-radius: 20px;
             padding: 1.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .stat-card {
-            border-left: 4px solid #6366f1;
-            transition: transform 0.3s ease;
+            border-left: 4px solid #2563eb;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
         .stat-card:hover {
-            transform: translateY(-4px);
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
         }
 
         .stat-number {
             font-size: 2.2rem;
             font-weight: 800;
             line-height: 1.2;
+            color: #0f172a;
         }
 
         /* Table Styling */
-        .table-custom {
-            color: var(--text-light);
-        }
         .table-custom th {
-            background-color: #1e293b;
-            color: #818cf8;
+            background-color: #f1f5f9;
+            color: #1e293b;
             border-bottom: 2px solid var(--border-color);
             font-weight: 700;
             padding: 1rem;
         }
         .table-custom td {
-            background-color: rgba(15, 23, 42, 0.4);
             border-bottom: 1px solid var(--border-color);
             padding: 0.85rem 1rem;
             vertical-align: middle;
         }
 
         .form-control, .form-select {
-            background-color: #1e293b !important;
+            background-color: #ffffff !important;
             border: 1px solid var(--border-color);
-            color: #f8fafc !important;
+            color: #0f172a !important;
             border-radius: 10px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #2563eb;
+            box-shadow: 0 0 0 0.2rem rgba(37, 99, 235, 0.15);
         }
 
         /* Print Specific Optimization CSS */
@@ -98,24 +101,9 @@
             .no-print, .navbar, .btn, .search-filter-box {
                 display: none !important;
             }
-            .glass-card {
-                background: #ffffff !important;
-                border: 1px solid #ddd !important;
+            .custom-card {
+                border: 1px solid #ccc !important;
                 box-shadow: none !important;
-                color: #000000 !important;
-            }
-            .table-custom th {
-                background-color: #f1f5f9 !important;
-                color: #000000 !important;
-            }
-            .table-custom td {
-                background-color: #ffffff !important;
-                color: #000000 !important;
-                border-bottom: 1px solid #ccc !important;
-            }
-            .chart-box {
-                max-width: 450px !important;
-                margin: 0 auto 2rem auto !important;
             }
             .print-header {
                 display: block !important;
@@ -133,27 +121,31 @@
 
     <!-- Printable Official Header -->
     <div class="print-header">
-        <h2>School Student Transport Analytics Report</h2>
-        <p>Rajula Bineesh — High School Transport Department | Generated on <span id="print-date"></span></p>
+        <h2>SABTMHSS THAYINERI</h2>
+        <h3>Student Transport Analytics & Master Report</h3>
+        <p>Rajula Bineesh — High School Transport Department | Report Date: <span id="print-date"></span></p>
         <hr>
     </div>
 
-    <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark sticky-top no-print">
+    <!-- Light Navbar -->
+    <nav class="navbar navbar-expand-lg sticky-top no-print">
         <div class="container-fluid px-4">
             <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
-                <i class="fa-solid fa-square-root-variable text-primary"></i> Rajula Bineesh
-                <span class="badge bg-primary bg-opacity-20 text-primary ms-2 fs-6">Admin Panel</span>
+                <i class="fa-solid fa-graduation-cap text-primary fs-4"></i> 
+                <div>
+                    <span class="fw-bold d-block leading-none">SABTMHSS THAYINERI</span>
+                    <small class="text-muted fw-normal" style="font-size: 0.75rem;">Admin Analytics Dashboard</small>
+                </div>
             </a>
             <div class="ms-auto d-flex gap-2">
-                <button onclick="window.print()" class="btn btn-outline-light btn-sm rounded-pill px-3">
-                    <i class="fa-solid fa-print me-1"></i> Print / Save PDF
+                <button onclick="window.print()" class="btn btn-outline-secondary btn-sm rounded-pill px-3 fw-semibold">
+                    <i class="fa-solid fa-print me-1"></i> Print Report / PDF
                 </button>
-                <button onclick="exportToCSV()" class="btn btn-success btn-sm rounded-pill px-3">
+                <button onclick="exportToCSV()" class="btn btn-success btn-sm rounded-pill px-3 fw-semibold">
                     <i class="fa-solid fa-file-excel me-1"></i> Export CSV
                 </button>
-                <a href="transport.html" class="btn btn-outline-info btn-sm rounded-pill px-3">
-                    <i class="fa-solid fa-pen-to-square me-1"></i> Student Form
+                <a href="transport.html" class="btn btn-primary btn-sm rounded-pill px-3 fw-semibold">
+                    <i class="fa-solid fa-pen-to-square me-1"></i> Student Survey Page
                 </a>
             </div>
         </div>
@@ -165,11 +157,12 @@
         <!-- Header Title -->
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 no-print">
             <div>
-                <h2 class="fw-bold mb-1">Transport Dashboard & Student Records</h2>
-                <p class="text-muted mb-0">Overview of student commuting modes and route allocations (~2,000 capacity).</p>
+                <span class="badge bg-primary bg-opacity-10 text-primary px-3 py-1 rounded-pill fw-semibold mb-2 fs-6">SABTMHSS THAYINERI</span>
+                <h2 class="fw-bold text-dark mb-1">Student Transport Analytics Portal</h2>
+                <p class="text-muted mb-0">Real-time student commute records and dynamic class-wise breakdown.</p>
             </div>
             <div class="mt-3 mt-md-0">
-                <button onclick="loadData()" class="btn btn-primary rounded-pill px-4">
+                <button onclick="fetchLiveData()" id="refreshBtn" class="btn btn-outline-primary rounded-pill px-4 fw-semibold">
                     <i class="fa-solid fa-rotate me-2"></i> Refresh Data
                 </button>
             </div>
@@ -178,69 +171,53 @@
         <!-- Metric Stat Cards -->
         <div class="row g-3 mb-4">
             <div class="col-6 col-md-3">
-                <div class="glass-card stat-card border-start-primary">
-                    <span class="text-muted small fw-semibold">TOTAL SUBMISSIONS</span>
-                    <div class="stat-number text-indigo" id="stat-total">1,842</div>
-                    <small class="text-success"><i class="fa-solid fa-arrow-up"></i> 92% Completed</small>
+                <div class="custom-card stat-card" style="border-left-color: #2563eb;">
+                    <span class="text-muted small fw-semibold text-uppercase">TOTAL SUBMISSIONS</span>
+                    <div class="stat-number text-primary" id="stat-total">0</div>
+                    <small class="text-muted" id="filter-label">All Classes & Divisions</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="glass-card stat-card" style="border-left-color: #38bdf8;">
-                    <span class="text-muted small fw-semibold">SCHOOL BUS USERS</span>
-                    <div class="stat-number text-info" id="stat-bus">850</div>
-                    <small class="text-muted">46.1% of Total</small>
+                <div class="custom-card stat-card" style="border-left-color: #0284c7;">
+                    <span class="text-muted small fw-semibold text-uppercase">SCHOOL BUS USERS</span>
+                    <div class="stat-number text-info" id="stat-bus">0</div>
+                    <small class="text-muted" id="stat-bus-pct">0% of filtered</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="glass-card stat-card" style="border-left-color: #22c55e;">
-                    <span class="text-muted small fw-semibold">CYCLISTS & WALKERS</span>
-                    <div class="stat-number text-success" id="stat-walk">620</div>
-                    <small class="text-muted">33.7% Eco-Commuters</small>
+                <div class="custom-card stat-card" style="border-left-color: #16a34a;">
+                    <span class="text-muted small fw-semibold text-uppercase">WALKING & CYCLING</span>
+                    <div class="stat-number text-success" id="stat-walk">0</div>
+                    <small class="text-muted" id="stat-eco-pct">0% Eco-Commuters</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
-                <div class="glass-card stat-card" style="border-left-color: #f59e0b;">
-                    <span class="text-muted small fw-semibold">PRIVATE VEHICLES</span>
-                    <div class="stat-number text-warning" id="stat-private">372</div>
-                    <small class="text-muted">20.2% Dropped Off</small>
+                <div class="custom-card stat-card" style="border-left-color: #d97706;">
+                    <span class="text-muted small fw-semibold text-uppercase">PRIVATE VEHICLES</span>
+                    <div class="stat-number text-warning" id="stat-private">0</div>
+                    <small class="text-muted" id="stat-pvt-pct">0% Dropped Off</small>
                 </div>
             </div>
         </div>
 
-        <!-- Analytics Charts Row -->
-        <div class="row g-4 mb-4">
-            <div class="col-lg-5">
-                <div class="glass-card h-100 chart-box">
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-chart-pie me-2 text-primary"></i> Transport Mode Breakdown</h5>
-                    <div style="max-height: 280px; position: relative;">
-                        <canvas id="transportPieChart"></canvas>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-7">
-                <div class="glass-card h-100 chart-box">
-                    <h5 class="fw-bold mb-3"><i class="fa-solid fa-chart-column me-2 text-info"></i> Class-wise Transport Preferences</h5>
-                    <div style="max-height: 280px; position: relative;">
-                        <canvas id="classBarChart"></canvas>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Search & Filter Controls -->
-        <div class="glass-card mb-4 no-print search-filter-box">
+        <!-- Interactive Filters Box -->
+        <div class="custom-card mb-4 no-print search-filter-box">
+            <h6 class="fw-bold text-dark mb-3"><i class="fa-solid fa-filter text-primary me-2"></i> Filter Student Records & Graphs</h6>
             <div class="row g-3">
-                <div class="col-md-4">
-                    <label class="form-label text-muted small fw-semibold">Search Student / Roll / Bus</label>
+                <!-- Search Input -->
+                <div class="col-md-3">
+                    <label class="form-label text-muted small fw-semibold">Search Name / Roll No / Bus</label>
                     <div class="input-group">
-                        <span class="input-group-text bg-dark border-secondary border-opacity-50 text-muted"><i class="fa-solid fa-magnifying-glass"></i></span>
-                        <input type="text" id="searchInput" class="form-control" placeholder="Search by name, roll no..." onkeyup="filterTable()">
+                        <span class="input-group-text bg-light text-muted border-end-0"><i class="fa-solid fa-magnifying-glass"></i></span>
+                        <input type="text" id="searchInput" class="form-control border-start-0" placeholder="Type student name..." onkeyup="applyFilters()">
                     </div>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label text-muted small fw-semibold">Filter by Class</label>
-                    <select id="classFilter" class="form-select" onchange="filterTable()">
-                        <option value="">All Classes</option>
+
+                <!-- Class Filter -->
+                <div class="col-md-3">
+                    <label class="form-label text-muted small fw-semibold">Select Class / Grade</label>
+                    <select id="classFilter" class="form-select" onchange="applyFilters()">
+                        <option value="">All Classes (Grade 8 - 12)</option>
                         <option value="Grade 8">Grade 8</option>
                         <option value="Grade 9">Grade 9</option>
                         <option value="Grade 10">Grade 10</option>
@@ -248,10 +225,25 @@
                         <option value="Grade 12">Grade 12</option>
                     </select>
                 </div>
-                <div class="col-md-4">
-                    <label class="form-label text-muted small fw-semibold">Filter by Transport Mode</label>
-                    <select id="modeFilter" class="form-select" onchange="filterTable()">
-                        <option value="">All Modes</option>
+
+                <!-- Division Filter -->
+                <div class="col-md-3">
+                    <label class="form-label text-muted small fw-semibold">Select Division / Section</label>
+                    <select id="divisionFilter" class="form-select" onchange="applyFilters()">
+                        <option value="">All Divisions (A - E)</option>
+                        <option value="A">Division A</option>
+                        <option value="B">Division B</option>
+                        <option value="C">Division C</option>
+                        <option value="D">Division D</option>
+                        <option value="E">Division E</option>
+                    </select>
+                </div>
+
+                <!-- Transport Mode Filter -->
+                <div class="col-md-3">
+                    <label class="form-label text-muted small fw-semibold">Select Transport Mode</label>
+                    <select id="modeFilter" class="form-select" onchange="applyFilters()">
+                        <option value="">All Transport Modes</option>
                         <option value="School Bus">School Bus</option>
                         <option value="Cycle">Cycle</option>
                         <option value="Walking">Walking</option>
@@ -261,11 +253,31 @@
             </div>
         </div>
 
+        <!-- Analytics Charts Row -->
+        <div class="row g-4 mb-4">
+            <div class="col-lg-5">
+                <div class="custom-card h-100">
+                    <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-chart-pie me-2 text-primary"></i> Transport Mode Share</h5>
+                    <div style="max-height: 260px; position: relative;">
+                        <canvas id="transportPieChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-7">
+                <div class="custom-card h-100">
+                    <h5 class="fw-bold text-dark mb-3"><i class="fa-solid fa-chart-column me-2 text-info"></i> Class-wise Commute Preferences</h5>
+                    <div style="max-height: 260px; position: relative;">
+                        <canvas id="classBarChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Student Data Table -->
-        <div class="glass-card">
+        <div class="custom-card">
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h5 class="fw-bold mb-0"><i class="fa-solid fa-list-check me-2 text-primary"></i> Student Master Records</h5>
-                <span class="text-muted small">Showing <span id="record-count">0</span> records</span>
+                <h5 class="fw-bold text-dark mb-0"><i class="fa-solid fa-list-check me-2 text-primary"></i> Student Master Records</h5>
+                <span class="badge bg-light text-dark border px-3 py-2">Showing <strong id="record-count">0</strong> records</span>
             </div>
 
             <div class="table-responsive">
@@ -282,7 +294,11 @@
                         </tr>
                     </thead>
                     <tbody id="studentTableBody">
-                        <!-- Dynamic Rows loaded via JS -->
+                        <tr>
+                            <td colspan="7" class="text-center text-muted py-5">
+                                <i class="fa-solid fa-spinner fa-spin me-2 fs-4 text-primary"></i> Fetching live records from Google Sheet...
+                            </td>
+                        </tr>
                     </tbody>
                 </table>
             </div>
@@ -296,156 +312,184 @@
 
         const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycby-jEbxlr6-kKfhWggnhZBsdL-uIC6ODoHwAlM6tPrtatN0705YtIVReXJu865TM7RG/exec';
 
-        // Sample Representative Dataset (fallback/initial preview)
-        let studentData = [
-            { timestamp: '11/23/2026, 09:15 AM', studentName: 'Ananya Sharma', rollNo: '1001', classGrade: 'Grade 10', division: 'A', transportMode: 'School Bus', busNumber: 'Bus 01' },
-            { timestamp: '11/23/2026, 09:18 AM', studentName: 'Rohan Verma', rollNo: '1002', classGrade: 'Grade 10', division: 'B', transportMode: 'Cycle', busNumber: 'N/A' },
-            { timestamp: '11/23/2026, 09:20 AM', studentName: 'Priya Nair', rollNo: '1003', classGrade: 'Grade 12', division: 'A', transportMode: 'School Bus', busNumber: 'Bus 03' },
-            { timestamp: '11/23/2026, 09:25 AM', studentName: 'Aditya Kumar', rollNo: '1004', classGrade: 'Grade 9', division: 'C', transportMode: 'Walking', busNumber: 'N/A' },
-            { timestamp: '11/23/2026, 09:30 AM', studentName: 'Sneha Patel', rollNo: '1005', classGrade: 'Grade 11', division: 'D', transportMode: 'Private Vehicle', busNumber: 'N/A' },
-            { timestamp: '11/23/2026, 09:34 AM', studentName: 'Vikram Menon', rollNo: '1006', classGrade: 'Grade 8', division: 'B', transportMode: 'School Bus', busNumber: 'Bus 02' },
-            { timestamp: '11/23/2026, 09:40 AM', studentName: 'Kavya Rajesh', rollNo: '1007', classGrade: 'Grade 12', division: 'C', transportMode: 'School Bus', busNumber: 'Bus 05' },
-            { timestamp: '11/23/2026, 09:45 AM', studentName: 'Arjun Das', rollNo: '1008', classGrade: 'Grade 9', division: 'A', transportMode: 'Cycle', busNumber: 'N/A' }
-        ];
+        // Master dataset starts EMPTY
+        let allStudentData = [];
+        let pieChart, barChart;
 
-        async function loadData() {
+        async function fetchLiveData() {
+            const refreshBtn = document.getElementById('refreshBtn');
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Loading...';
+
             try {
                 const res = await fetch(GOOGLE_SCRIPT_URL);
                 const data = await res.json();
-                if (Array.isArray(data) && data.length > 0) {
-                    studentData = data;
-                    updateDashboardMetrics(studentData);
+                
+                if (Array.isArray(data)) {
+                    allStudentData = data;
+                } else {
+                    allStudentData = [];
                 }
             } catch (err) {
-                console.log('Using sample/cached dataset:', err);
+                console.error('Error fetching live data:', err);
             }
-            renderTable(studentData);
-            updateCharts(studentData);
+
+            refreshBtn.disabled = false;
+            refreshBtn.innerHTML = '<i class="fa-solid fa-rotate me-2"></i> Refresh Data';
+
+            applyFilters();
         }
 
-        function updateDashboardMetrics(data) {
-            document.getElementById('stat-total').innerText = data.length;
-            
-            let busCount = data.filter(d => d.transportMode === 'School Bus').length;
-            let ecoCount = data.filter(d => d.transportMode === 'Walking' || d.transportMode === 'Cycle').length;
-            let privateCount = data.filter(d => d.transportMode === 'Private Vehicle').length;
+        function applyFilters() {
+            const search = document.getElementById('searchInput').value.toLowerCase().trim();
+            const selectedClass = document.getElementById('classFilter').value;
+            const selectedDivision = document.getElementById('divisionFilter').value;
+            const selectedMode = document.getElementById('modeFilter').value;
 
-            document.getElementById('stat-bus').innerText = busCount;
-            document.getElementById('stat-walk').innerText = ecoCount;
-            document.getElementById('stat-private').innerText = privateCount;
+            const filteredData = allStudentData.filter(item => {
+                const matchesSearch = !search || 
+                    (item.studentName && item.studentName.toLowerCase().includes(search)) ||
+                    (item.rollNo && item.rollNo.toString().toLowerCase().includes(search)) ||
+                    (item.busNumber && item.busNumber.toLowerCase().includes(search));
+
+                const matchesClass = !selectedClass || item.classGrade === selectedClass;
+                const matchesDivision = !selectedDivision || item.division === selectedDivision;
+                const matchesMode = !selectedMode || item.transportMode === selectedMode;
+
+                return matchesSearch && matchesClass && matchesDivision && matchesMode;
+            });
+
+            updateMetrics(filteredData, selectedClass, selectedDivision);
+            renderTable(filteredData);
+            updateCharts(filteredData);
         }
 
-        // Render Table
+        function updateMetrics(data, selectedClass, selectedDivision) {
+            const total = data.length;
+            const bus = data.filter(d => d.transportMode === 'School Bus').length;
+            const eco = data.filter(d => d.transportMode === 'Walking' || d.transportMode === 'Cycle').length;
+            const pvt = data.filter(d => d.transportMode === 'Private Vehicle').length;
+
+            document.getElementById('stat-total').innerText = total;
+            document.getElementById('stat-bus').innerText = bus;
+            document.getElementById('stat-walk').innerText = eco;
+            document.getElementById('stat-private').innerText = pvt;
+
+            const busPct = total > 0 ? Math.round((bus / total) * 100) : 0;
+            const ecoPct = total > 0 ? Math.round((eco / total) * 100) : 0;
+            const pvtPct = total > 0 ? Math.round((pvt / total) * 100) : 0;
+
+            document.getElementById('stat-bus-pct').innerText = `${busPct}% of filtered`;
+            document.getElementById('stat-eco-pct').innerText = `${ecoPct}% Eco-Commuters`;
+            document.getElementById('stat-pvt-pct').innerText = `${pvtPct}% Dropped Off`;
+
+            let labelText = 'All Classes & Divisions';
+            if (selectedClass && selectedDivision) labelText = `${selectedClass} - Div ${selectedDivision}`;
+            else if (selectedClass) labelText = `${selectedClass} (All Divs)`;
+            else if (selectedDivision) labelText = `Division ${selectedDivision} (All Classes)`;
+
+            document.getElementById('filter-label').innerText = labelText;
+        }
+
         function renderTable(data) {
             const tbody = document.getElementById('studentTableBody');
             tbody.innerHTML = '';
             document.getElementById('record-count').innerText = data.length;
 
             if (data.length === 0) {
-                tbody.innerHTML = '<tr><td colspan="7" class="text-center text-muted py-4">No matching student records found.</td></tr>';
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7" class="text-center text-muted py-5">
+                            <i class="fa-solid fa-folder-open fs-2 mb-2 d-block text-secondary"></i>
+                            <strong>No student records found.</strong><br>
+                            <small class="text-muted">Submissions from students will appear here automatically.</small>
+                        </td>
+                    </tr>`;
                 return;
             }
 
             data.forEach((row, index) => {
-                let badgeClass = 'bg-secondary';
-                if (row.transportMode === 'School Bus') badgeClass = 'bg-info text-dark';
-                else if (row.transportMode === 'Cycle') badgeClass = 'bg-success';
-                else if (row.transportMode === 'Walking') badgeClass = 'bg-primary';
+                let badgeClass = 'bg-secondary text-white';
+                if (row.transportMode === 'School Bus') badgeClass = 'bg-primary text-white';
+                else if (row.transportMode === 'Cycle') badgeClass = 'bg-success text-white';
+                else if (row.transportMode === 'Walking') badgeClass = 'bg-info text-dark';
                 else if (row.transportMode === 'Private Vehicle') badgeClass = 'bg-warning text-dark';
 
                 tbody.innerHTML += `
                     <tr>
                         <td class="text-muted fw-bold">${index + 1}</td>
-                        <td class="small text-muted">${row.timestamp}</td>
-                        <td class="fw-bold">${row.studentName}</td>
-                        <td class="font-monospace text-info">${row.rollNo}</td>
-                        <td><span class="badge bg-dark border border-secondary">${row.classGrade} - ${row.division}</span></td>
-                        <td><span class="badge ${badgeClass}">${row.transportMode}</span></td>
-                        <td class="fw-semibold">${row.busNumber !== 'N/A' ? '<i class="fa-solid fa-bus me-1 text-info"></i>' + row.busNumber : '<span class="text-muted">-</span>'}</td>
+                        <td class="small text-muted">${row.timestamp || '-'}</td>
+                        <td class="fw-bold text-dark">${row.studentName || '-'}</td>
+                        <td class="font-monospace text-primary fw-bold">${row.rollNo || '-'}</td>
+                        <td><span class="badge bg-light text-dark border">${row.classGrade || '-'} - Div ${row.division || '-'}</span></td>
+                        <td><span class="badge ${badgeClass} px-3 py-2">${row.transportMode || '-'}</span></td>
+                        <td class="fw-semibold">${row.busNumber && row.busNumber !== 'N/A' ? '<i class="fa-solid fa-bus text-primary me-1"></i>' + row.busNumber : '<span class="text-muted">-</span>'}</td>
                     </tr>
                 `;
             });
         }
 
-        // Filter Table
-        function filterTable() {
-            const search = document.getElementById('searchInput').value.toLowerCase();
-            const classVal = document.getElementById('classFilter').value;
-            const modeVal = document.getElementById('modeFilter').value;
-
-            const filtered = studentData.filter(item => {
-                const matchesSearch = item.studentName.toLowerCase().includes(search) ||
-                                      item.rollNo.toLowerCase().includes(search) ||
-                                      item.busNumber.toLowerCase().includes(search);
-                const matchesClass = !classVal || item.classGrade === classVal;
-                const matchesMode = !modeVal || item.transportMode === modeVal;
-
-                return matchesSearch && matchesClass && matchesMode;
-            });
-
-            renderTable(filtered);
-        }
-
-        // Export Table Data to CSV File
         function exportToCSV() {
+            if (allStudentData.length === 0) {
+                alert('No student records available to export.');
+                return;
+            }
+
             let csv = 'Timestamp,Student Name,Roll Number,Class,Division,Transport Mode,Bus Number\n';
-            studentData.forEach(row => {
-                csv += `"${row.timestamp}","${row.studentName}","${row.rollNo}","${row.classGrade}","${row.division}","${row.transportMode}","${row.busNumber}"\n`;
+            allStudentData.forEach(row => {
+                csv += `"${row.timestamp || ''}","${row.studentName || ''}","${row.rollNo || ''}","${row.classGrade || ''}","${row.division || ''}","${row.transportMode || ''}","${row.busNumber || ''}"\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv' });
             const url = window.URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.setAttribute('href', url);
-            a.setAttribute('download', 'Student_Transport_Data_2026.csv');
+            a.setAttribute('download', 'SABTMHSS_Student_Transport_Data.csv');
             a.click();
         }
 
-        // Initialize Charts
-        let pieChart, barChart;
         function initCharts() {
-            // Pie Chart: Mode Distribution
             const ctxPie = document.getElementById('transportPieChart').getContext('2d');
             pieChart = new Chart(ctxPie, {
                 type: 'doughnut',
                 data: {
                     labels: ['School Bus', 'Walking', 'Cycle', 'Private Vehicle'],
                     datasets: [{
-                        data: [850, 380, 240, 372],
-                        backgroundColor: ['#38bdf8', '#4f46e5', '#22c55e', '#f59e0b'],
-                        borderWidth: 0
+                        data: [0, 0, 0, 0],
+                        backgroundColor: ['#2563eb', '#38bdf8', '#16a34a', '#d97706'],
+                        borderWidth: 2,
+                        borderColor: '#ffffff'
                     }]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     plugins: {
-                        legend: { position: 'bottom', labels: { color: '#94a3b8' } }
+                        legend: { position: 'bottom', labels: { color: '#475569', font: { family: 'Plus Jakarta Sans' } } }
                     }
                 }
             });
 
-            // Bar Chart: Class-wise Breakdown
             const ctxBar = document.getElementById('classBarChart').getContext('2d');
             barChart = new Chart(ctxBar, {
                 type: 'bar',
                 data: {
                     labels: ['Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'],
                     datasets: [
-                        { label: 'School Bus', data: [180, 210, 200, 140, 120], backgroundColor: '#38bdf8' },
-                        { label: 'Walk / Cycle', data: [120, 140, 150, 110, 100], backgroundColor: '#22c55e' },
-                        { label: 'Private Vehicle', data: [60, 70, 80, 82, 80], backgroundColor: '#f59e0b' }
+                        { label: 'School Bus', data: [0, 0, 0, 0, 0], backgroundColor: '#2563eb' },
+                        { label: 'Walk / Cycle', data: [0, 0, 0, 0, 0], backgroundColor: '#16a34a' },
+                        { label: 'Private Vehicle', data: [0, 0, 0, 0, 0], backgroundColor: '#d97706' }
                     ]
                 },
                 options: {
                     responsive: true,
                     maintainAspectRatio: false,
                     scales: {
-                        x: { ticks: { color: '#94a3b8' }, grid: { display: false } },
-                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(255,255,255,0.05)' } }
+                        x: { ticks: { color: '#64748b' }, grid: { display: false } },
+                        y: { ticks: { color: '#64748b' }, grid: { color: '#e2e8f0' } }
                     },
                     plugins: {
-                        legend: { position: 'bottom', labels: { color: '#94a3b8' } }
+                        legend: { position: 'bottom', labels: { color: '#475569', font: { family: 'Plus Jakarta Sans' } } }
                     }
                 }
             });
@@ -454,19 +498,28 @@
         function updateCharts(data) {
             if (!pieChart || !barChart) return;
 
-            let bus = data.filter(d => d.transportMode === 'School Bus').length;
-            let walk = data.filter(d => d.transportMode === 'Walking').length;
-            let cycle = data.filter(d => d.transportMode === 'Cycle').length;
-            let pvt = data.filter(d => d.transportMode === 'Private Vehicle').length;
+            const bus = data.filter(d => d.transportMode === 'School Bus').length;
+            const walk = data.filter(d => d.transportMode === 'Walking').length;
+            const cycle = data.filter(d => d.transportMode === 'Cycle').length;
+            const pvt = data.filter(d => d.transportMode === 'Private Vehicle').length;
 
             pieChart.data.datasets[0].data = [bus, walk, cycle, pvt];
             pieChart.update();
+
+            const grades = ['Grade 8', 'Grade 9', 'Grade 10', 'Grade 11', 'Grade 12'];
+            const busData = grades.map(g => data.filter(d => d.classGrade === g && d.transportMode === 'School Bus').length);
+            const ecoData = grades.map(g => data.filter(d => d.classGrade === g && (d.transportMode === 'Walking' || d.transportMode === 'Cycle')).length);
+            const pvtData = grades.map(g => data.filter(d => d.classGrade === g && d.transportMode === 'Private Vehicle').length);
+
+            barChart.data.datasets[0].data = busData;
+            barChart.data.datasets[1].data = ecoData;
+            barChart.data.datasets[2].data = pvtData;
+            barChart.update();
         }
 
-        // Initial Load
         window.onload = function() {
             initCharts();
-            loadData();
+            fetchLiveData();
         };
     </script>
 </body>
