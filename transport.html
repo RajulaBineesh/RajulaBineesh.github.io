@@ -188,7 +188,7 @@
             padding: 12px;
         }
 
-        /* Dynamic Entrance Animations for Form Fields */
+        /* Dynamic Entrance Animations */
         .anim-slide-left {
             animation: slideInLeft 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
@@ -202,7 +202,6 @@
             animation: popInBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
         }
 
-        /* Delays for staggered entrance */
         .delay-1 { animation-delay: 0.15s; }
         .delay-2 { animation-delay: 0.25s; }
         .delay-3 { animation-delay: 0.35s; }
@@ -230,7 +229,7 @@
             100% { opacity: 1; transform: scale(1); }
         }
 
-        /* Super Animated Transport Choice Cards for Kids */
+        /* Animated Transport Choice Cards */
         .transport-card {
             background: rgba(18, 16, 38, 0.85);
             border: 2px solid rgba(31, 193, 209, 0.35);
@@ -287,7 +286,7 @@
             100% { box-shadow: 0 0 25px rgba(209, 31, 183, 0.6); border-color: var(--poster-pink); }
         }
 
-        /* Playful Continuous Wiggle/Float Animations for Kid Icons */
+        /* Animated Kid Icons */
         .transport-icon {
             font-size: clamp(2.4rem, 5.5vw, 3rem);
             margin-bottom: 0.6rem;
@@ -297,7 +296,6 @@
             display: inline-block;
         }
 
-        /* Specific Animated Movements for Each Transport Icon */
         .icon-walk { animation: kidWalkWiggle 2.5s infinite ease-in-out; }
         .icon-cycle { animation: kidCycleFloat 3s infinite ease-in-out; }
         .icon-car { animation: kidCarVroom 2.2s infinite ease-in-out; }
@@ -342,7 +340,7 @@
             50% { transform: translateY(-12px) scale(1.25) rotate(-5deg); }
         }
 
-        /* Dynamic Elastic Bus Dropdown Animation */
+        /* Bus Dropdown Animation */
         #bus-details-container {
             display: none;
             animation: elasticBusSlide 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
@@ -352,6 +350,30 @@
             0% { opacity: 0; transform: translateY(-20px) scale(0.85); }
             80% { transform: translateY(5px) scale(1.02); }
             100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
+        /* Moral Booster Celebration Card Animation */
+        #celebration-card {
+            display: none;
+            animation: celebrationBounceIn 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+        }
+
+        @keyframes celebrationBounceIn {
+            0% { opacity: 0; transform: scale(0.5) rotate(-10deg); }
+            70% { transform: scale(1.08) rotate(3deg); }
+            100% { opacity: 1; transform: scale(1) rotate(0deg); }
+        }
+
+        .trophy-badge {
+            font-size: 4.5rem;
+            animation: trophyJump 2s infinite ease-in-out;
+            display: inline-block;
+            filter: drop-shadow(0 0 25px rgba(245, 158, 11, 0.8));
+        }
+
+        @keyframes trophyJump {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-15px) scale(1.15) rotate(8deg); }
         }
 
         .text-glow-blue {
@@ -435,10 +457,12 @@
             </div>
         </div>
 
-        <!-- Animated Survey Form -->
+        <!-- Animated Survey Form Container -->
         <div class="row justify-content-center mt-3">
             <div class="col-lg-8">
                 <div class="synapse-card p-4 p-md-5">
+                    
+                    <!-- FORM CONTAINER -->
                     <form id="transportForm" onsubmit="submitTransportData(event)">
                         
                         <!-- Student Profile Header -->
@@ -456,36 +480,35 @@
                                 <input type="text" id="studentName" class="form-control" placeholder="Enter student's full name" required>
                             </div>
 
-                            <!-- Roll Number (Animates in from Right) -->
+                            <!-- Phone Number / WhatsApp Number (Animates in from Right) -->
                             <div class="col-md-6 anim-slide-right delay-2">
-                                <label class="form-label">Roll Number <span class="text-danger">*</span></label>
-                                <input type="text" id="rollNo" class="form-control" placeholder="Enter roll number" required>
-                            </div>
-
-                            <!-- Phone Number / WhatsApp Number (Animates in from Left) -->
-                            <div class="col-md-6 anim-slide-left delay-3">
                                 <label class="form-label">Phone Number <span class="text-danger">*</span></label>
                                 <input type="tel" id="phoneNo" class="form-control" placeholder="Enter 10-digit mobile number" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required>
                             </div>
 
-                            <!-- Class / Grade (Animates in from Right) -->
-                            <div class="col-md-3 anim-slide-right delay-3">
-                                <label class="form-label">Class / Grade <span class="text-danger">*</span></label>
+                            <!-- Class 1 to 10 (Animates in from Left) -->
+                            <div class="col-md-6 anim-slide-left delay-3">
+                                <label class="form-label">Class <span class="text-danger">*</span></label>
                                 <select id="classGrade" class="form-select" required>
-                                    <option value="" disabled selected>Select Class</option>
-                                    <option value="Grade 8">Grade 8</option>
-                                    <option value="Grade 9">Grade 9</option>
-                                    <option value="Grade 10">Grade 10</option>
-                                    <option value="Grade 11">Grade 11</option>
-                                    <option value="Grade 12">Grade 12</option>
+                                    <option value="" disabled selected>Select Class (Class 1 to 10)</option>
+                                    <option value="Class 1">Class 1</option>
+                                    <option value="Class 2">Class 2</option>
+                                    <option value="Class 3">Class 3</option>
+                                    <option value="Class 4">Class 4</option>
+                                    <option value="Class 5">Class 5</option>
+                                    <option value="Class 6">Class 6</option>
+                                    <option value="Class 7">Class 7</option>
+                                    <option value="Class 8">Class 8</option>
+                                    <option value="Class 9">Class 9</option>
+                                    <option value="Class 10">Class 10</option>
                                 </select>
                             </div>
 
                             <!-- Division A to K (Animates in from Right) -->
-                            <div class="col-md-3 anim-slide-right delay-4">
+                            <div class="col-md-6 anim-slide-right delay-3">
                                 <label class="form-label">Division <span class="text-danger">*</span></label>
                                 <select id="division" class="form-select" required>
-                                    <option value="" disabled selected>Select</option>
+                                    <option value="" disabled selected>Select Division (A to K)</option>
                                     <option value="A">Division A</option>
                                     <option value="B">Division B</option>
                                     <option value="C">Division C</option>
@@ -510,7 +533,7 @@
                         </div>
                         <p class="text-light small mb-4 fw-medium anim-slide-up delay-4" style="color: #cbd5e1;">Select how you commute to school every day:</p>
 
-                        <!-- Mobile Responsive Animated Transport Choice Grid (Staggered Entrance for Kids) -->
+                        <!-- Mobile Responsive Animated Transport Choice Grid -->
                         <div class="row g-2 g-md-3 mb-4">
                             <!-- Option: Walking -->
                             <div class="col-6 col-md-3 anim-pop-in delay-2">
@@ -555,7 +578,7 @@
                                 <i class="fa-solid fa-bus me-1"></i> Select Bus Number <span class="text-danger">*</span>
                             </label>
                             <select id="busNumber" class="form-select">
-                                <option value="" disabled selected>Select Bus Number</option>
+                                <option value="" disabled selected>Select Bus Number (Bus 1 to 10)</option>
                                 <option value="Bus 01">Bus No. 01</option>
                                 <option value="Bus 02">Bus No. 02</option>
                                 <option value="Bus 03">Bus No. 03</option>
@@ -577,6 +600,44 @@
                         </div>
 
                     </form>
+
+                    <!-- ANIMATED MORAL BOOSTER RESPONSE CARD FOR KIDS -->
+                    <div id="celebration-card" class="text-center py-4">
+                        <div class="trophy-badge mb-3">🏆</div>
+                        <h2 class="fw-bold text-white kid-font mb-2">🎉 PHENOMENAL JOB, CHAMPION!</h2>
+                        <h5 class="text-glow-yellow mb-4">You are officially registered for SABTMHSS THAYINERI Transport!</h5>
+
+                        <!-- Kid Badge Box -->
+                        <div class="p-4 rounded-4 text-start mb-4" style="background: rgba(31, 193, 209, 0.15); border: 2px solid var(--poster-blue);">
+                            <div class="d-flex align-items-center gap-3 mb-3">
+                                <div class="fs-1" id="badge-icon">⭐</div>
+                                <div>
+                                    <h5 class="fw-bold text-white mb-0" id="badge-title">Super Student Transport Badge</h5>
+                                    <small class="text-info fw-semibold" id="badge-subtitle">Verified SABTMHSS Commuter</small>
+                                </div>
+                            </div>
+                            <hr class="border-secondary opacity-50">
+                            <div class="row g-2 text-light small">
+                                <div class="col-6"><strong>Student Name:</strong> <span id="res-name" class="text-white fw-bold"></span></div>
+                                <div class="col-6"><strong>Class & Div:</strong> <span id="res-class" class="text-white fw-bold"></span></div>
+                                <div class="col-6"><strong>Phone Number:</strong> <span id="res-phone" class="text-white fw-bold"></span></div>
+                                <div class="col-6"><strong>Mode of Transport:</strong> <span id="res-mode" class="text-glow-pink fw-bold"></span></div>
+                            </div>
+                            <div class="mt-3 alert p-2 mb-0 rounded-3 text-center fw-bold text-white" id="praise-box" style="background: rgba(209, 31, 183, 0.25); border: 1px solid var(--poster-pink);">
+                                "Keep shining, work hard in school, and have a safe journey every day!" ✨
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex flex-wrap justify-content-center gap-3">
+                            <button onclick="resetSurveyForm()" class="btn btn-neon-glow px-4 py-2">
+                                <i class="fa-solid fa-rotate-left me-2"></i> Submit Another Student
+                            </button>
+                            <a href="index.html" class="btn btn-outline-light rounded-pill px-4 py-2">
+                                <i class="fa-solid fa-house me-2"></i> Return to Home
+                            </a>
+                        </div>
+                    </div>
 
                     <!-- Alert Responses -->
                     <div id="statusAlert" class="mt-4 d-none"></div>
@@ -628,7 +689,6 @@
             e.preventDefault();
 
             const studentName = document.getElementById('studentName').value.trim();
-            const rollNo = document.getElementById('rollNo').value.trim();
             const phoneNo = document.getElementById('phoneNo').value.trim();
             const classGrade = document.getElementById('classGrade').value;
             const division = document.getElementById('division').value;
@@ -643,13 +703,13 @@
             const statusAlert = document.getElementById('statusAlert');
 
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Submitting to SABTMHSS Database...';
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Registering Champion...';
             statusAlert.classList.add('d-none');
 
             const payload = {
                 timestamp: new Date().toLocaleString(),
                 studentName: studentName,
-                rollNo: rollNo,
+                rollNo: "N/A",
                 phoneNo: phoneNo,
                 classGrade: classGrade,
                 division: division,
@@ -665,19 +725,33 @@
                     body: JSON.stringify(payload)
                 });
 
-                submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Response 🚀';
+                // Populate Animated Moral Booster Card
+                document.getElementById('res-name').innerText = studentName;
+                document.getElementById('res-class').innerText = `${classGrade} - Division ${division}`;
+                document.getElementById('res-phone').innerText = phoneNo;
+                document.getElementById('res-mode').innerText = busNumber !== 'N/A' ? `${selectedTransportMode} (${busNumber})` : selectedTransportMode;
 
-                statusAlert.className = 'alert alert-success mt-4 rounded-3 p-3 text-start anim-pop-in';
-                statusAlert.style.backgroundColor = 'rgba(34, 197, 94, 0.25)';
-                statusAlert.style.borderColor = '#22c55e';
-                statusAlert.style.color = '#ffffff';
-                statusAlert.innerHTML = '<i class="fa-solid fa-circle-check text-success me-2 fs-5"></i> <strong>Submission Successful!</strong> Thank you! Your details have been successfully recorded in the SABTMHSS THAYINERI database.';
-                statusAlert.classList.remove('d-none');
+                const praiseBox = document.getElementById('praise-box');
+                const badgeIcon = document.getElementById('badge-icon');
+                const badgeTitle = document.getElementById('badge-title');
 
-                document.getElementById('transportForm').reset();
-                document.querySelectorAll('.transport-card').forEach(c => c.classList.remove('selected'));
-                document.getElementById('bus-details-container').style.display = 'none';
+                if (selectedTransportMode === 'Walking' || selectedTransportMode === 'Cycle') {
+                    badgeIcon.innerText = '🌱';
+                    badgeTitle.innerText = 'Eco-Friendly Commuter Badge 🌟';
+                    praiseBox.innerHTML = '🌱 <strong>Eco Hero Unlocked!</strong> Walking or cycling keeps your mind sharp and our planet clean!';
+                } else if (selectedTransportMode === 'School Bus') {
+                    badgeIcon.innerText = '🚌';
+                    badgeTitle.innerText = 'SABTMHSS Bus Explorer Badge 🚍';
+                    praiseBox.innerHTML = '🚌 <strong>Bus Rider Unlocked!</strong> Enjoy fun bus rides with your classmates every day!';
+                } else {
+                    badgeIcon.innerText = '🚗';
+                    badgeTitle.innerText = 'Swift Commuter Badge ⚡';
+                    praiseBox.innerHTML = '🚗 <strong>Smart Traveler Unlocked!</strong> Stay safe and have an amazing learning day at SABTMHSS THAYINERI!';
+                }
+
+                // Hide Form and Show Celebration Card
+                document.getElementById('transportForm').style.display = 'none';
+                document.getElementById('celebration-card').style.display = 'block';
 
             } catch (err) {
                 console.error(err);
@@ -688,6 +762,18 @@
                 statusAlert.innerHTML = '<i class="fa-solid fa-circle-exclamation me-2 fs-5"></i> Something went wrong submitting your response. Please try again.';
                 statusAlert.classList.remove('d-none');
             }
+        }
+
+        function resetSurveyForm() {
+            document.getElementById('transportForm').reset();
+            document.querySelectorAll('.transport-card').forEach(c => c.classList.remove('selected'));
+            document.getElementById('bus-details-container').style.display = 'none';
+            selectedTransportMode = '';
+
+            document.getElementById('celebration-card').style.display = 'none';
+            document.getElementById('transportForm').style.display = 'block';
+            document.getElementById('submitBtn').disabled = false;
+            document.getElementById('submitBtn').innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Response 🚀';
         }
     </script>
 </body>
