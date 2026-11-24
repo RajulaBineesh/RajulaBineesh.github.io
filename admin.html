@@ -668,9 +668,8 @@
         function verifyAdminPassword(e) {
             e.preventDefault();
             const input = document.getElementById('adminPasswordInput').value.trim();
-            const allowedPasswords = ['admin123', 'sabtmhss2026', 'admin', 'sabtmhss'];
 
-            if (allowedPasswords.includes(input.toLowerCase())) {
+            if (input === 'sabt@3040') {
                 sessionStorage.setItem('adminAuthenticated', 'true');
                 unlockDashboard();
             } else {
