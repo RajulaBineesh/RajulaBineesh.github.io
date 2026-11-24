@@ -249,12 +249,48 @@
                 <a href="transport.html" class="btn btn-neon-glow btn-sm">
                     <i class="fa-solid fa-pen-to-square me-1"></i> Survey Form
                 </a>
+                <button onclick="logoutAdmin()" id="logoutBtn" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold d-none">
+                    <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
+                </button>
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <div class="container-fluid px-3 px-md-4 my-4">
+    <!-- Login Modal Overlay for Admin Protection -->
+    <div id="loginOverlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(7, 6, 15, 0.96); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 9999; display: flex; align-items: center; justify-content: center; padding: 20px;">
+        <div class="synapse-card p-4 p-md-5 text-center" style="max-width: 440px; width: 100%; border: 1.5px solid var(--border-glow); border-radius: 24px; box-shadow: 0 0 50px rgba(31, 193, 209, 0.25);">
+            <div class="mb-3">
+                <span class="badge rounded-pill px-3 py-2 fw-bold mb-2" style="background: rgba(31, 193, 209, 0.18); border: 1px solid rgba(31, 193, 209, 0.4); color: var(--poster-blue);">
+                    <i class="fa-solid fa-shield-halved me-1"></i> SABTMHSS THAYINERI
+                </span>
+                <div class="fs-1 my-2 text-glow-blue"><i class="fa-solid fa-lock"></i></div>
+                <h3 class="fw-bold text-white font-heading">Admin Portal Login</h3>
+                <p class="text-light small" style="color: #cbd5e1;">Please enter the administrator password to access student transport analytics.</p>
+            </div>
+
+            <form onsubmit="verifyAdminPassword(event)">
+                <div class="mb-3 text-start">
+                    <label class="form-label text-white fw-bold">Admin Password</label>
+                    <div class="input-group">
+                        <input type="password" id="adminPasswordInput" class="form-control" placeholder="Enter Admin Password" required style="background: rgba(18, 16, 38, 0.95); color: white; border: 1px solid var(--border-glow);">
+                        <button class="btn btn-outline-secondary text-info border-secondary" type="button" onclick="togglePasswordVisibility()"><i class="fa-solid fa-eye" id="toggleEye"></i></button>
+                    </div>
+                </div>
+                <div id="loginErrorMsg" class="alert alert-danger p-2 small d-none mb-3" style="border-radius: 10px;">
+                    <i class="fa-solid fa-circle-exclamation me-1"></i> Incorrect password! Please try again.
+                </div>
+                <button type="submit" class="btn btn-neon-glow w-100 py-2.5 fw-bold text-uppercase tracking-wider">
+                    <i class="fa-solid fa-key me-2"></i> Unlock Dashboard
+                </button>
+            </form>
+            <div class="mt-3 pt-3 border-top border-secondary border-opacity-25">
+                <a href="index.html" class="text-info small text-decoration-none"><i class="fa-solid fa-arrow-left me-1"></i> Back to Home Page</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content Container (Hidden until authenticated) -->
+    <div class="container-fluid px-3 px-md-4 my-4" id="adminDashboardContent" style="display: none;">
         
         <!-- Header Title -->
         <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 no-print gap-3">
@@ -629,9 +665,57 @@
             barChart.update();
         }
 
-        window.onload = function() {
-            initCharts();
+        function verifyAdminPassword(e) {
+            e.preventDefault();
+            const input = document.getElementById('adminPasswordInput').value.trim();
+            const allowedPasswords = ['admin123', 'sabtmhss2026', 'admin', 'sabtmhss'];
+
+            if (allowedPasswords.includes(input.toLowerCase())) {
+                sessionStorage.setItem('adminAuthenticated', 'true');
+                unlockDashboard();
+            } else {
+                const err = document.getElementById('loginErrorMsg');
+                err.classList.remove('d-none');
+                document.getElementById('adminPasswordInput').value = '';
+            }
+        }
+
+        function unlockDashboard() {
+            document.getElementById('loginOverlay').style.display = 'none';
+            document.getElementById('adminDashboardContent').style.display = 'block';
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) logoutBtn.classList.remove('d-none');
+            
+            if (!pieChart || !barChart) {
+                initCharts();
+            }
             fetchLiveData();
+        }
+
+        function logoutAdmin() {
+            sessionStorage.removeItem('adminAuthenticated');
+            location.reload();
+        }
+
+        function togglePasswordVisibility() {
+            const passInput = document.getElementById('adminPasswordInput');
+            const eye = document.getElementById('toggleEye');
+            if (passInput.type === 'password') {
+                passInput.type = 'text';
+                eye.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passInput.type = 'password';
+                eye.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        }
+
+        window.onload = function() {
+            if (sessionStorage.getItem('adminAuthenticated') === 'true') {
+                unlockDashboard();
+            } else {
+                document.getElementById('loginOverlay').style.display = 'flex';
+                document.getElementById('adminDashboardContent').style.display = 'none';
+            }
         };
     </script>
 </body>
