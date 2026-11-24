@@ -9,18 +9,20 @@
     <!-- FontAwesome Icons -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@500;700;800;900&family=Fredoka:wght@500;600;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --poster-pink: #d11fb7;
             --poster-blue: #1fc1d1;
             --poster-purple: #741fd1;
+            --poster-yellow: #f59e0b;
+            --poster-green: #10b981;
             --background-dark: #07060f;
             --card-dark: rgba(16, 14, 30, 0.88);
-            --border-glow: rgba(31, 193, 209, 0.35);
+            --border-glow: rgba(31, 193, 209, 0.4);
             --text-light: #f8fafc;
-            --text-muted: #cbd5e1; /* High contrast light slate */
+            --text-muted: #cbd5e1;
         }
 
         body {
@@ -32,9 +34,41 @@
             flex-direction: column;
             justify-content: space-between;
             overflow-x: hidden;
+            position: relative;
             background-image: 
-                radial-gradient(circle at 10% 20%, rgba(31, 193, 209, 0.1) 0%, transparent 40%),
-                radial-gradient(circle at 90% 80%, rgba(209, 31, 183, 0.1) 0%, transparent 40%);
+                radial-gradient(circle at 10% 20%, rgba(31, 193, 209, 0.12) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(209, 31, 183, 0.12) 0%, transparent 40%);
+        }
+
+        /* Floating background animated particles for kids */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            font-size: 1.5rem;
+            opacity: 0.25;
+            animation: floatParticle 12s infinite linear;
+        }
+
+        .particle:nth-child(1) { top: 10%; left: 8%; animation-duration: 14s; }
+        .particle:nth-child(2) { top: 70%; left: 85%; animation-duration: 10s; animation-delay: -3s; }
+        .particle:nth-child(3) { top: 30%; left: 90%; animation-duration: 16s; animation-delay: -6s; }
+        .particle:nth-child(4) { top: 80%; left: 12%; animation-duration: 11s; animation-delay: -2s; }
+        .particle:nth-child(5) { top: 50%; left: 50%; animation-duration: 18s; animation-delay: -8s; }
+
+        @keyframes floatParticle {
+            0% { transform: translateY(0) rotate(0deg) scale(0.9); }
+            50% { transform: translateY(-30px) rotate(180deg) scale(1.1); }
+            100% { transform: translateY(0) rotate(360deg) scale(0.9); }
         }
 
         h1, h2, h3, h4, .font-heading {
@@ -45,13 +79,19 @@
             font-family: 'Orbitron', sans-serif;
         }
 
+        .kid-font {
+            font-family: 'Fredoka', sans-serif;
+        }
+
         /* Navigation Bar */
         .top-nav {
-            background: rgba(7, 6, 15, 0.9);
+            background: rgba(7, 6, 15, 0.92);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid var(--border-glow);
             padding: 12px 20px;
+            position: relative;
+            z-index: 10;
         }
 
         .nav-logo {
@@ -76,20 +116,27 @@
 
         .btn-neon-glow:hover {
             box-shadow: 0 0 30px rgba(209, 31, 183, 0.6);
-            transform: translateY(-2px);
+            transform: translateY(-2px) scale(1.02);
             color: white;
         }
 
-        /* Frosted Glass Synapse Card */
+        /* Main Form Card */
         .synapse-card {
             background: var(--card-dark);
             backdrop-filter: blur(16px);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid var(--border-glow);
             border-radius: 24px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+            box-shadow: 0 20px 45px rgba(0, 0, 0, 0.6);
             position: relative;
+            z-index: 2;
             overflow: hidden;
+            animation: cardPopIn 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes cardPopIn {
+            from { opacity: 0; transform: scale(0.92) translateY(20px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
         .synapse-card::before {
@@ -98,8 +145,8 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, var(--poster-blue), var(--poster-pink), var(--poster-purple));
+            height: 4px;
+            background: linear-gradient(90deg, var(--poster-blue), var(--poster-pink), var(--poster-yellow), var(--poster-purple));
         }
 
         /* High Visibility Form Controls */
@@ -119,10 +166,9 @@
             border-radius: 12px;
             font-size: 1rem;
             font-weight: 600;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* High contrast bright placeholder styling */
         .form-control::placeholder {
             color: #a0aec0 !important;
             opacity: 1 !important;
@@ -131,9 +177,9 @@
 
         .form-control:focus, .form-select:focus {
             border-color: var(--poster-blue) !important;
-            box-shadow: 0 0 20px rgba(31, 193, 209, 0.5) !important;
+            box-shadow: 0 0 22px rgba(31, 193, 209, 0.5) !important;
             background-color: rgba(24, 20, 50, 1) !important;
-            color: #ffffff !important;
+            transform: translateY(-2px);
         }
 
         .form-select option {
@@ -142,10 +188,52 @@
             padding: 12px;
         }
 
-        /* Animated Interactive Transport Selection Cards */
+        /* Dynamic Entrance Animations for Form Fields */
+        .anim-slide-left {
+            animation: slideInLeft 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        .anim-slide-right {
+            animation: slideInRight 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        .anim-slide-up {
+            animation: slideInUp 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+        .anim-pop-in {
+            animation: popInBounce 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        /* Delays for staggered entrance */
+        .delay-1 { animation-delay: 0.15s; }
+        .delay-2 { animation-delay: 0.25s; }
+        .delay-3 { animation-delay: 0.35s; }
+        .delay-4 { animation-delay: 0.45s; }
+        .delay-5 { animation-delay: 0.55s; }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes popInBounce {
+            0% { opacity: 0; transform: scale(0.6); }
+            70% { transform: scale(1.08); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Super Animated Transport Choice Cards for Kids */
         .transport-card {
             background: rgba(18, 16, 38, 0.85);
-            border: 2px solid rgba(31, 193, 209, 0.3);
+            border: 2px solid rgba(31, 193, 209, 0.35);
             border-radius: 20px;
             padding: 1.5rem 0.8rem;
             text-align: center;
@@ -163,16 +251,16 @@
             left: -50%;
             width: 200%;
             height: 200%;
-            background: radial-gradient(circle, rgba(31, 193, 209, 0.2) 0%, transparent 70%);
+            background: radial-gradient(circle, rgba(31, 193, 209, 0.25) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.4s ease;
         }
 
         .transport-card:hover {
-            transform: translateY(-10px) scale(1.05);
+            transform: translateY(-12px) scale(1.08) rotate(1deg);
             border-color: var(--poster-blue);
-            box-shadow: 0 12px 30px rgba(31, 193, 209, 0.4);
-            background: rgba(31, 193, 209, 0.12);
+            box-shadow: 0 15px 35px rgba(31, 193, 209, 0.45);
+            background: rgba(31, 193, 209, 0.15);
         }
 
         .transport-card:hover::after {
@@ -187,76 +275,105 @@
 
         .transport-card.selected {
             border-color: var(--poster-pink);
-            background: linear-gradient(135deg, rgba(209, 31, 183, 0.25), rgba(31, 193, 209, 0.2));
-            box-shadow: 0 0 30px rgba(209, 31, 183, 0.6), inset 0 0 15px rgba(209, 31, 183, 0.3);
-            transform: translateY(-6px) scale(1.04);
-            animation: selectedPulse 2s infinite ease-in-out;
+            background: linear-gradient(135deg, rgba(209, 31, 183, 0.3), rgba(31, 193, 209, 0.25));
+            box-shadow: 0 0 35px rgba(209, 31, 183, 0.7), inset 0 0 15px rgba(209, 31, 183, 0.4);
+            transform: translateY(-8px) scale(1.06);
+            animation: kidSelectedRainbow 2s infinite ease-in-out;
         }
 
-        @keyframes selectedPulse {
-            0% { box-shadow: 0 0 20px rgba(209, 31, 183, 0.5); }
-            50% { box-shadow: 0 0 35px rgba(209, 31, 183, 0.8), 0 0 15px rgba(31, 193, 209, 0.5); }
-            100% { box-shadow: 0 0 20px rgba(209, 31, 183, 0.5); }
+        @keyframes kidSelectedRainbow {
+            0% { box-shadow: 0 0 25px rgba(209, 31, 183, 0.6); border-color: var(--poster-pink); }
+            50% { box-shadow: 0 0 40px rgba(31, 193, 209, 0.8), 0 0 15px rgba(245, 158, 11, 0.6); border-color: var(--poster-blue); }
+            100% { box-shadow: 0 0 25px rgba(209, 31, 183, 0.6); border-color: var(--poster-pink); }
         }
 
-        /* Animated Transport Icons */
+        /* Playful Continuous Wiggle/Float Animations for Kid Icons */
         .transport-icon {
-            font-size: clamp(2.2rem, 5vw, 2.8rem);
+            font-size: clamp(2.4rem, 5.5vw, 3rem);
             margin-bottom: 0.6rem;
             color: var(--poster-blue);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease, filter 0.3s ease;
-            filter: drop-shadow(0 0 8px rgba(31, 193, 209, 0.6));
+            filter: drop-shadow(0 0 10px rgba(31, 193, 209, 0.7));
             display: inline-block;
         }
 
+        /* Specific Animated Movements for Each Transport Icon */
+        .icon-walk { animation: kidWalkWiggle 2.5s infinite ease-in-out; }
+        .icon-cycle { animation: kidCycleFloat 3s infinite ease-in-out; }
+        .icon-car { animation: kidCarVroom 2.2s infinite ease-in-out; }
+        .icon-bus { animation: kidBusBounce 2.8s infinite ease-in-out; }
+
+        @keyframes kidWalkWiggle {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-4px) rotate(-6deg); }
+            75% { transform: translateY(-4px) rotate(6deg); }
+        }
+
+        @keyframes kidCycleFloat {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-6px) scale(1.05); }
+        }
+
+        @keyframes kidCarVroom {
+            0%, 100% { transform: translateX(0) scale(1); }
+            50% { transform: translateX(4px) scale(1.04); }
+        }
+
+        @keyframes kidBusBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            30% { transform: translateY(-7px) scale(1.06); }
+            60% { transform: translateY(2px) scale(0.98); }
+        }
+
         .transport-card:hover .transport-icon {
-            transform: translateY(-6px) scale(1.25) rotate(8deg);
+            transform: translateY(-8px) scale(1.3) rotate(12deg) !important;
             color: #ffffff;
-            filter: drop-shadow(0 0 15px rgba(31, 193, 209, 1));
+            filter: drop-shadow(0 0 20px rgba(31, 193, 209, 1));
         }
 
         .transport-card.selected .transport-icon {
             color: var(--poster-pink);
-            filter: drop-shadow(0 0 15px rgba(209, 31, 183, 0.9));
-            animation: iconBounce 1.5s infinite ease-in-out;
+            filter: drop-shadow(0 0 20px rgba(209, 31, 183, 1));
+            animation: excitedKidJump 1.2s infinite ease-in-out !important;
         }
 
-        @keyframes iconBounce {
-            0%, 100% { transform: translateY(0) scale(1.1); }
-            50% { transform: translateY(-8px) scale(1.2); }
+        @keyframes excitedKidJump {
+            0%, 100% { transform: translateY(0) scale(1.15); }
+            50% { transform: translateY(-12px) scale(1.25) rotate(-5deg); }
         }
 
-        /* Bus Field Dynamic Animation */
+        /* Dynamic Elastic Bus Dropdown Animation */
         #bus-details-container {
             display: none;
-            animation: pulseGlowIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: elasticBusSlide 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55);
         }
 
-        @keyframes pulseGlowIn {
-            from {
-                opacity: 0;
-                transform: translateY(-12px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        @keyframes elasticBusSlide {
+            0% { opacity: 0; transform: translateY(-20px) scale(0.85); }
+            80% { transform: translateY(5px) scale(1.02); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
         }
 
         .text-glow-blue {
             color: var(--poster-blue);
-            text-shadow: 0 0 15px rgba(31, 193, 209, 0.5);
+            text-shadow: 0 0 15px rgba(31, 193, 209, 0.6);
         }
 
         .text-glow-pink {
             color: var(--poster-pink);
-            text-shadow: 0 0 15px rgba(209, 31, 183, 0.5);
+            text-shadow: 0 0 15px rgba(209, 31, 183, 0.6);
         }
 
-        /* Footer */
+        .text-glow-yellow {
+            color: var(--poster-yellow);
+            text-shadow: 0 0 15px rgba(245, 158, 11, 0.6);
+        }
+
         footer {
             border-top: 1px solid var(--border-glow);
             background: rgba(7, 6, 15, 0.95);
+            position: relative;
+            z-index: 10;
         }
 
         @media (max-width: 576px) {
@@ -271,6 +388,15 @@
     </style>
 </head>
 <body>
+
+    <!-- Kids Background Floating Particles -->
+    <div class="bg-particles">
+        <span class="particle">✨</span>
+        <span class="particle">🚌</span>
+        <span class="particle">⭐</span>
+        <span class="particle">🚲</span>
+        <span class="particle">🎒</span>
+    </div>
 
     <!-- Synapse Navigation Bar -->
     <nav class="top-nav sticky-top">
@@ -297,47 +423,53 @@
     <div class="container my-4 my-md-5">
         <div class="row justify-content-center text-center">
             <div class="col-lg-9">
-                <span class="badge rounded-pill px-3 py-2 fw-bold mb-3" style="background: rgba(31, 193, 209, 0.18); border: 1px solid rgba(31, 193, 209, 0.4); color: var(--poster-blue);">
+                <span class="badge rounded-pill px-3 py-2 fw-bold mb-3 anim-pop-in" style="background: rgba(31, 193, 209, 0.2); border: 1px solid rgba(31, 193, 209, 0.5); color: var(--poster-blue);">
                     <i class="fa-solid fa-school me-2"></i> SABTMHSS THAYINERI
                 </span>
-                <h1 class="fw-bold display-5 mb-2 text-white">
-                    Student Transport <span class="text-glow-blue">Data Collection</span>
+                <h1 class="fw-bold display-5 mb-2 text-white anim-slide-up delay-1">
+                    Student Transport <span class="text-glow-blue">Data Collection</span> 🚀
                 </h1>
-                <p class="text-light fs-6 fs-md-5 fw-medium" style="color: #cbd5e1;">
+                <p class="text-light fs-6 fs-md-5 fw-medium anim-slide-up delay-2" style="color: #cbd5e1;">
                     Official Daily Commute Survey for SABTMHSS THAYINERI Students
                 </p>
             </div>
         </div>
 
-        <!-- Survey Form -->
+        <!-- Animated Survey Form -->
         <div class="row justify-content-center mt-3">
             <div class="col-lg-8">
                 <div class="synapse-card p-4 p-md-5">
                     <form id="transportForm" onsubmit="submitTransportData(event)">
                         
                         <!-- Student Profile Header -->
-                        <div class="d-flex align-items-center gap-2 mb-4 pb-2 border-bottom border-secondary border-opacity-25">
-                            <div class="p-2 rounded-3 text-glow-blue" style="background: rgba(31, 193, 209, 0.15);">
+                        <div class="d-flex align-items-center gap-2 mb-4 pb-2 border-bottom border-secondary border-opacity-25 anim-pop-in delay-2">
+                            <div class="p-2 rounded-3 text-glow-blue" style="background: rgba(31, 193, 209, 0.18);">
                                 <i class="fa-solid fa-id-card fs-4"></i>
                             </div>
-                            <h4 class="fw-bold mb-0 text-white font-heading">Student Information</h4>
+                            <h4 class="fw-bold mb-0 text-white font-heading">Student Details</h4>
                         </div>
 
                         <div class="row g-3 mb-4">
-                            <!-- Student Name -->
-                            <div class="col-md-6">
+                            <!-- Student Name (Animates in from Left) -->
+                            <div class="col-md-6 anim-slide-left delay-2">
                                 <label class="form-label">Full Name <span class="text-danger">*</span></label>
                                 <input type="text" id="studentName" class="form-control" placeholder="Enter student's full name" required>
                             </div>
 
-                            <!-- Roll Number -->
-                            <div class="col-md-6">
+                            <!-- Roll Number (Animates in from Right) -->
+                            <div class="col-md-6 anim-slide-right delay-2">
                                 <label class="form-label">Roll Number <span class="text-danger">*</span></label>
                                 <input type="text" id="rollNo" class="form-control" placeholder="Enter roll number" required>
                             </div>
 
-                            <!-- Class / Grade -->
-                            <div class="col-md-6">
+                            <!-- Phone Number / WhatsApp Number (Animates in from Left) -->
+                            <div class="col-md-6 anim-slide-left delay-3">
+                                <label class="form-label">Phone Number <span class="text-danger">*</span></label>
+                                <input type="tel" id="phoneNo" class="form-control" placeholder="Enter 10-digit mobile number" pattern="[0-9]{10}" title="Please enter a valid 10-digit phone number" required>
+                            </div>
+
+                            <!-- Class / Grade (Animates in from Right) -->
+                            <div class="col-md-3 anim-slide-right delay-3">
                                 <label class="form-label">Class / Grade <span class="text-danger">*</span></label>
                                 <select id="classGrade" class="form-select" required>
                                     <option value="" disabled selected>Select Class</option>
@@ -349,89 +481,98 @@
                                 </select>
                             </div>
 
-                            <!-- Division -->
-                            <div class="col-md-6">
-                                <label class="form-label">Division / Section <span class="text-danger">*</span></label>
+                            <!-- Division A to K (Animates in from Right) -->
+                            <div class="col-md-3 anim-slide-right delay-4">
+                                <label class="form-label">Division <span class="text-danger">*</span></label>
                                 <select id="division" class="form-select" required>
-                                    <option value="" disabled selected>Select Division</option>
+                                    <option value="" disabled selected>Select</option>
                                     <option value="A">Division A</option>
                                     <option value="B">Division B</option>
                                     <option value="C">Division C</option>
                                     <option value="D">Division D</option>
                                     <option value="E">Division E</option>
+                                    <option value="F">Division F</option>
+                                    <option value="G">Division G</option>
+                                    <option value="H">Division H</option>
+                                    <option value="I">Division I</option>
+                                    <option value="J">Division J</option>
+                                    <option value="K">Division K</option>
                                 </select>
                             </div>
                         </div>
 
                         <!-- Transport Selection Header -->
-                        <div class="d-flex align-items-center gap-2 mb-3 pt-3 border-top border-secondary border-opacity-25">
-                            <div class="p-2 rounded-3 text-glow-pink" style="background: rgba(209, 31, 183, 0.15);">
+                        <div class="d-flex align-items-center gap-2 mb-3 pt-3 border-top border-secondary border-opacity-25 anim-pop-in delay-4">
+                            <div class="p-2 rounded-3 text-glow-pink" style="background: rgba(209, 31, 183, 0.18);">
                                 <i class="fa-solid fa-route fs-4"></i>
                             </div>
                             <h4 class="fw-bold mb-0 text-white font-heading">Mode of Transport <span class="text-danger">*</span></h4>
                         </div>
-                        <p class="text-light small mb-4 fw-medium" style="color: #cbd5e1;">Select how you commute to school every day:</p>
+                        <p class="text-light small mb-4 fw-medium anim-slide-up delay-4" style="color: #cbd5e1;">Select how you commute to school every day:</p>
 
-                        <!-- Mobile Responsive Animated Transport Choice Grid -->
+                        <!-- Mobile Responsive Animated Transport Choice Grid (Staggered Entrance for Kids) -->
                         <div class="row g-2 g-md-3 mb-4">
                             <!-- Option: Walking -->
-                            <div class="col-6 col-md-3">
+                            <div class="col-6 col-md-3 anim-pop-in delay-2">
                                 <div class="transport-card" onclick="selectTransport('Walking', this)">
                                     <input type="radio" name="transportMode" value="Walking" required>
-                                    <i class="fa-solid fa-person-walking transport-icon"></i>
-                                    <h6 class="fw-bold mb-0 mt-2 text-white">Walking</h6>
+                                    <i class="fa-solid fa-person-walking transport-icon icon-walk"></i>
+                                    <h6 class="fw-bold mb-0 mt-2 text-white kid-font">Walking</h6>
                                 </div>
                             </div>
 
                             <!-- Option: Cycle -->
-                            <div class="col-6 col-md-3">
+                            <div class="col-6 col-md-3 anim-pop-in delay-3">
                                 <div class="transport-card" onclick="selectTransport('Cycle', this)">
                                     <input type="radio" name="transportMode" value="Cycle">
-                                    <i class="fa-solid fa-bicycle transport-icon"></i>
-                                    <h6 class="fw-bold mb-0 mt-2 text-white">Cycle</h6>
+                                    <i class="fa-solid fa-bicycle transport-icon icon-cycle"></i>
+                                    <h6 class="fw-bold mb-0 mt-2 text-white kid-font">Cycle</h6>
                                 </div>
                             </div>
 
                             <!-- Option: Private Vehicle -->
-                            <div class="col-6 col-md-3">
+                            <div class="col-6 col-md-3 anim-pop-in delay-4">
                                 <div class="transport-card" onclick="selectTransport('Private Vehicle', this)">
                                     <input type="radio" name="transportMode" value="Private Vehicle">
-                                    <i class="fa-solid fa-car transport-icon"></i>
-                                    <h6 class="fw-bold mb-0 mt-2 text-white">Private Vehicle</h6>
+                                    <i class="fa-solid fa-car transport-icon icon-car"></i>
+                                    <h6 class="fw-bold mb-0 mt-2 text-white kid-font">Private Vehicle</h6>
                                 </div>
                             </div>
 
                             <!-- Option: School Bus -->
-                            <div class="col-6 col-md-3">
+                            <div class="col-6 col-md-3 anim-pop-in delay-5">
                                 <div class="transport-card" onclick="selectTransport('School Bus', this)">
                                     <input type="radio" name="transportMode" value="School Bus">
-                                    <i class="fa-solid fa-bus-simple transport-icon"></i>
-                                    <h6 class="fw-bold mb-0 mt-2 text-white">School Bus</h6>
+                                    <i class="fa-solid fa-bus-simple transport-icon icon-bus"></i>
+                                    <h6 class="fw-bold mb-0 mt-2 text-white kid-font">School Bus</h6>
                                 </div>
                             </div>
                         </div>
 
-                        <!-- Dynamic Bus Number Container -->
-                        <div id="bus-details-container" class="p-3 mb-4 rounded-3" style="background: rgba(31, 193, 209, 0.15); border: 1.5px solid var(--border-glow);">
+                        <!-- Dynamic Bus Number Dropdown (Clean Bus 01 to Bus 10) -->
+                        <div id="bus-details-container" class="p-3 mb-4 rounded-3" style="background: rgba(31, 193, 209, 0.18); border: 1.5px solid var(--border-glow);">
                             <label class="form-label text-glow-blue">
                                 <i class="fa-solid fa-bus me-1"></i> Select Bus Number <span class="text-danger">*</span>
                             </label>
                             <select id="busNumber" class="form-select">
                                 <option value="" disabled selected>Select Bus Number</option>
-                                <option value="Bus 01">Bus No. 01 (North Route)</option>
-                                <option value="Bus 02">Bus No. 02 (East Route)</option>
-                                <option value="Bus 03">Bus No. 03 (South Route)</option>
-                                <option value="Bus 04">Bus No. 04 (West Route)</option>
-                                <option value="Bus 05">Bus No. 05 (Central Route)</option>
-                                <option value="Bus 06">Bus No. 06 (Suburban Route)</option>
-                                <option value="Bus Other">Other / Special Route</option>
+                                <option value="Bus 01">Bus No. 01</option>
+                                <option value="Bus 02">Bus No. 02</option>
+                                <option value="Bus 03">Bus No. 03</option>
+                                <option value="Bus 04">Bus No. 04</option>
+                                <option value="Bus 05">Bus No. 05</option>
+                                <option value="Bus 06">Bus No. 06</option>
+                                <option value="Bus 07">Bus No. 07</option>
+                                <option value="Bus 08">Bus No. 08</option>
+                                <option value="Bus 09">Bus No. 09</option>
+                                <option value="Bus 10">Bus No. 10</option>
                             </select>
                         </div>
 
                         <!-- Submit Button -->
-                        <div class="mt-4">
-                            <button type="submit" id="submitBtn" class="btn btn-neon-glow w-100 py-3 text-uppercase tracking-wider">
-                                <i class="fa-solid fa-paper-plane me-2"></i> Submit Response
+                        <div class="mt-4 anim-slide-up delay-5">
+                            <button type="submit" id="submitBtn" class="btn btn-neon-glow w-100 py-3 text-uppercase tracking-wider fs-6">
+                                <i class="fa-solid fa-paper-plane me-2"></i> Submit Response 🚀
                             </button>
                         </div>
 
@@ -488,6 +629,7 @@
 
             const studentName = document.getElementById('studentName').value.trim();
             const rollNo = document.getElementById('rollNo').value.trim();
+            const phoneNo = document.getElementById('phoneNo').value.trim();
             const classGrade = document.getElementById('classGrade').value;
             const division = document.getElementById('division').value;
             const busNumber = selectedTransportMode === 'School Bus' ? document.getElementById('busNumber').value : 'N/A';
@@ -508,6 +650,7 @@
                 timestamp: new Date().toLocaleString(),
                 studentName: studentName,
                 rollNo: rollNo,
+                phoneNo: phoneNo,
                 classGrade: classGrade,
                 division: division,
                 transportMode: selectedTransportMode,
@@ -523,13 +666,13 @@
                 });
 
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Response';
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Response 🚀';
 
-                statusAlert.className = 'alert alert-success mt-4 rounded-3 p-3 text-start';
+                statusAlert.className = 'alert alert-success mt-4 rounded-3 p-3 text-start anim-pop-in';
                 statusAlert.style.backgroundColor = 'rgba(34, 197, 94, 0.25)';
                 statusAlert.style.borderColor = '#22c55e';
                 statusAlert.style.color = '#ffffff';
-                statusAlert.innerHTML = '<i class="fa-solid fa-circle-check text-success me-2 fs-5"></i> <strong>Submission Successful!</strong> Thank you, student details have been recorded in the SABTMHSS THAYINERI database.';
+                statusAlert.innerHTML = '<i class="fa-solid fa-circle-check text-success me-2 fs-5"></i> <strong>Submission Successful!</strong> Thank you! Your details have been successfully recorded in the SABTMHSS THAYINERI database.';
                 statusAlert.classList.remove('d-none');
 
                 document.getElementById('transportForm').reset();
@@ -539,9 +682,9 @@
             } catch (err) {
                 console.error(err);
                 submitBtn.disabled = false;
-                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Response';
+                submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Response 🚀';
 
-                statusAlert.className = 'alert alert-danger mt-4 rounded-3 p-3 text-start';
+                statusAlert.className = 'alert alert-danger mt-4 rounded-3 p-3 text-start anim-pop-in';
                 statusAlert.innerHTML = '<i class="fa-solid fa-circle-exclamation me-2 fs-5"></i> Something went wrong submitting your response. Please try again.';
                 statusAlert.classList.remove('d-none');
             }

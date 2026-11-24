@@ -22,7 +22,7 @@
             --card-dark: rgba(16, 14, 30, 0.88);
             --border-glow: rgba(31, 193, 209, 0.35);
             --text-light: #f8fafc;
-            --text-muted: #cbd5e1; /* High contrast bright light slate */
+            --text-muted: #cbd5e1;
         }
 
         body {
@@ -308,10 +308,10 @@
             <div class="row g-2 g-md-3">
                 <!-- Search Input -->
                 <div class="col-12 col-md-3">
-                    <label class="form-label">Search Name / Roll No / Bus</label>
+                    <label class="form-label">Search Name / Roll No / Phone / Bus</label>
                     <div class="input-group">
                         <span class="input-group-text bg-dark border-secondary border-opacity-50 text-info"><i class="fa-solid fa-magnifying-glass"></i></span>
-                        <input type="text" id="searchInput" class="form-control" placeholder="Type student name..." onkeyup="applyFilters()">
+                        <input type="text" id="searchInput" class="form-control" placeholder="Type name, roll, phone..." onkeyup="applyFilters()">
                     </div>
                 </div>
 
@@ -328,16 +328,22 @@
                     </select>
                 </div>
 
-                <!-- Division Filter -->
+                <!-- Division Filter (A to K) -->
                 <div class="col-6 col-md-3">
                     <label class="form-label">Division / Section</label>
                     <select id="divisionFilter" class="form-select" onchange="applyFilters()">
-                        <option value="">All Divisions (A - E)</option>
+                        <option value="">All Divisions (A - K)</option>
                         <option value="A">Division A</option>
                         <option value="B">Division B</option>
                         <option value="C">Division C</option>
                         <option value="D">Division D</option>
                         <option value="E">Division E</option>
+                        <option value="F">Division F</option>
+                        <option value="G">Division G</option>
+                        <option value="H">Division H</option>
+                        <option value="I">Division I</option>
+                        <option value="J">Division J</option>
+                        <option value="K">Division K</option>
                     </select>
                 </div>
 
@@ -390,6 +396,7 @@
                             <th>Timestamp</th>
                             <th>Student Name</th>
                             <th>Roll No</th>
+                            <th>Phone No</th>
                             <th>Class & Division</th>
                             <th>Transport Mode</th>
                             <th>Bus Number</th>
@@ -397,7 +404,7 @@
                     </thead>
                     <tbody id="studentTableBody">
                         <tr>
-                            <td colspan="7" class="text-center text-light py-5">
+                            <td colspan="8" class="text-center text-light py-5">
                                 <i class="fa-solid fa-spinner fa-spin me-2 fs-4 text-glow-blue"></i> Fetching live records from SABTMHSS Google Sheet...
                             </td>
                         </tr>
@@ -452,6 +459,7 @@
                 const matchesSearch = !search || 
                     (item.studentName && item.studentName.toLowerCase().includes(search)) ||
                     (item.rollNo && item.rollNo.toString().toLowerCase().includes(search)) ||
+                    (item.phoneNo && item.phoneNo.toString().toLowerCase().includes(search)) ||
                     (item.busNumber && item.busNumber.toLowerCase().includes(search));
 
                 const matchesClass = !selectedClass || item.classGrade === selectedClass;
@@ -501,7 +509,7 @@
             if (data.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="7" class="text-center text-light py-5">
+                        <td colspan="8" class="text-center text-light py-5">
                             <i class="fa-solid fa-folder-open fs-2 mb-2 d-block text-info"></i>
                             <strong style="color: #f8fafc;">No student records found.</strong><br>
                             <small style="color: #cbd5e1;">Submissions from students will appear here automatically.</small>
@@ -523,6 +531,7 @@
                         <td class="small" style="color: #cbd5e1;">${row.timestamp || '-'}</td>
                         <td class="fw-bold text-white">${row.studentName || '-'}</td>
                         <td class="font-monospace text-glow-blue fw-bold">${row.rollNo || '-'}</td>
+                        <td class="fw-semibold text-light">${row.phoneNo ? '<i class="fa-solid fa-phone text-info me-1"></i>' + row.phoneNo : '-'}</td>
                         <td><span class="badge bg-dark border border-secondary text-light">${row.classGrade || '-'} - Div ${row.division || '-'}</span></td>
                         <td><span class="badge ${badgeClass} px-3 py-2 fw-semibold">${row.transportMode || '-'}</span></td>
                         <td class="fw-semibold">${row.busNumber && row.busNumber !== 'N/A' ? '<i class="fa-solid fa-bus text-glow-blue me-1"></i>' + row.busNumber : '<span style="color: #94a3b8;">-</span>'}</td>
@@ -537,9 +546,9 @@
                 return;
             }
 
-            let csv = 'Timestamp,Student Name,Roll Number,Class,Division,Transport Mode,Bus Number\n';
+            let csv = 'Timestamp,Student Name,Roll Number,Phone Number,Class,Division,Transport Mode,Bus Number\n';
             allStudentData.forEach(row => {
-                csv += `"${row.timestamp || ''}","${row.studentName || ''}","${row.rollNo || ''}","${row.classGrade || ''}","${row.division || ''}","${row.transportMode || ''}","${row.busNumber || ''}"\n`;
+                csv += `"${row.timestamp || ''}","${row.studentName || ''}","${row.rollNo || ''}","${row.phoneNo || ''}","${row.classGrade || ''}","${row.division || ''}","${row.transportMode || ''}","${row.busNumber || ''}"\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv' });
