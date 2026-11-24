@@ -117,6 +117,31 @@
             text-shadow: 0 0 12px rgba(31, 193, 209, 0.5);
         }
 
+        .stat-mode-icon {
+            font-size: clamp(1.2rem, 2.5vw, 1.7rem);
+            flex-shrink: 0;
+        }
+
+        @media (max-width: 576px) {
+            .stat-card {
+                padding: 0.85rem 0.9rem !important;
+                border-radius: 14px;
+            }
+            .stat-card-title {
+                font-size: 0.72rem;
+                letter-spacing: 0.5px;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .stat-number {
+                font-size: 1.55rem;
+            }
+            .stat-mode-icon {
+                font-size: 1.15rem !important;
+            }
+        }
+
         /* Table Styling */
         .table-custom {
             color: var(--text-light);
@@ -339,30 +364,45 @@
         <div class="row g-2 g-md-3 mb-4">
             <div class="col-6 col-md-3">
                 <div class="synapse-card stat-card" style="border-left-color: var(--poster-blue);">
-                    <span class="stat-card-title">TOTAL SUBMISSIONS</span>
-                    <div class="stat-number text-glow-blue" id="stat-total">0</div>
-                    <small class="text-info fw-semibold" id="filter-label">All Classes & Divisions</small>
+                    <span class="stat-card-title"><span class="d-none d-sm-inline">TOTAL SUBMISSIONS</span><span class="d-sm-none">TOTAL</span></span>
+                    <div class="stat-number text-glow-blue d-flex align-items-center justify-content-between">
+                        <span id="stat-total">0</span>
+                        <i class="fa-solid fa-users stat-mode-icon" style="color: var(--poster-blue); opacity: 0.85;"></i>
+                    </div>
+                    <small class="text-info fw-semibold text-truncate d-block" id="filter-label">All Classes & Divisions</small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="synapse-card stat-card" style="border-left-color: #38bdf8;">
-                    <span class="stat-card-title">SCHOOL BUS USERS</span>
-                    <div class="stat-number text-info" id="stat-bus">0</div>
-                    <small class="text-light fw-medium" style="color: #cbd5e1;" id="stat-bus-pct">0% of filtered</small>
+                    <span class="stat-card-title"><span class="d-none d-sm-inline">SCHOOL BUS USERS</span><span class="d-sm-none">BUS</span></span>
+                    <div class="stat-number text-info d-flex align-items-center justify-content-between">
+                        <span id="stat-bus">0</span>
+                        <i class="fa-solid fa-bus-simple stat-mode-icon text-info" style="opacity: 0.85;"></i>
+                    </div>
+                    <small class="text-light fw-medium d-flex align-items-center" style="color: #cbd5e1;" id="stat-bus-pct"><i class="fa-solid fa-bus-simple text-info me-1"></i>0% <span class="d-none d-sm-inline">of filtered</span></small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="synapse-card stat-card" style="border-left-color: #22c55e;">
-                    <span class="stat-card-title">WALKING & CYCLING</span>
-                    <div class="stat-number text-success" id="stat-walk">0</div>
-                    <small class="text-light fw-medium" style="color: #cbd5e1;" id="stat-eco-pct">0% Eco-Commuters</small>
+                    <span class="stat-card-title"><span class="d-none d-sm-inline">WALKING & CYCLING</span><span class="d-sm-none">WALK / CYCLE</span></span>
+                    <div class="stat-number text-success d-flex align-items-center justify-content-between">
+                        <span id="stat-walk">0</span>
+                        <span class="stat-mode-icon d-inline-flex align-items-center gap-1" style="opacity: 0.85;">
+                            <i class="fa-solid fa-person-walking text-info"></i>
+                            <i class="fa-solid fa-bicycle text-success"></i>
+                        </span>
+                    </div>
+                    <small class="text-light fw-medium d-flex align-items-center" style="color: #cbd5e1;" id="stat-eco-pct"><i class="fa-solid fa-leaf text-success me-1"></i>0% <span class="d-none d-sm-inline">Eco-Commuters</span></small>
                 </div>
             </div>
             <div class="col-6 col-md-3">
                 <div class="synapse-card stat-card" style="border-left-color: var(--poster-pink);">
-                    <span class="stat-card-title">PRIVATE VEHICLES</span>
-                    <div class="stat-number text-glow-pink" id="stat-private">0</div>
-                    <small class="text-light fw-medium" style="color: #cbd5e1;" id="stat-pvt-pct">0% Dropped Off</small>
+                    <span class="stat-card-title"><span class="d-none d-sm-inline">PRIVATE VEHICLES</span><span class="d-sm-none">PRIVATE</span></span>
+                    <div class="stat-number text-glow-pink d-flex align-items-center justify-content-between">
+                        <span id="stat-private">0</span>
+                        <i class="fa-solid fa-car stat-mode-icon text-glow-pink" style="opacity: 0.85;"></i>
+                    </div>
+                    <small class="text-light fw-medium d-flex align-items-center" style="color: #cbd5e1;" id="stat-pvt-pct"><i class="fa-solid fa-car text-glow-pink me-1"></i>0% <span class="d-none d-sm-inline">Dropped Off</span></small>
                 </div>
             </div>
         </div>
@@ -557,9 +597,9 @@
             const ecoPct = total > 0 ? Math.round((eco / total) * 100) : 0;
             const pvtPct = total > 0 ? Math.round((pvt / total) * 100) : 0;
 
-            document.getElementById('stat-bus-pct').innerText = `${busPct}% of filtered`;
-            document.getElementById('stat-eco-pct').innerText = `${ecoPct}% Eco-Commuters`;
-            document.getElementById('stat-pvt-pct').innerText = `${pvtPct}% Dropped Off`;
+            document.getElementById('stat-bus-pct').innerHTML = `<i class="fa-solid fa-bus-simple text-info me-1"></i>${busPct}% <span class="d-none d-sm-inline">of filtered</span>`;
+            document.getElementById('stat-eco-pct').innerHTML = `<i class="fa-solid fa-leaf text-success me-1"></i>${ecoPct}% <span class="d-none d-sm-inline">Eco-Commuters</span>`;
+            document.getElementById('stat-pvt-pct').innerHTML = `<i class="fa-solid fa-car text-glow-pink me-1"></i>${pvtPct}% <span class="d-none d-sm-inline">Dropped Off</span>`;
 
             let labelText = 'All Classes & Divisions';
             if (selectedClass && selectedDivision) labelText = `${selectedClass} - Div ${selectedDivision}`;
