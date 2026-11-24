@@ -237,11 +237,12 @@
             .nav-actions {
                 width: 100%;
                 justify-content: flex-end;
-                gap: 6px !important;
+                gap: 5px !important;
+                flex-wrap: wrap !important;
             }
             .top-nav .btn {
-                padding: 5px 10px !important;
-                font-size: 0.75rem !important;
+                padding: 5px 9px !important;
+                font-size: 0.74rem !important;
                 border-radius: 20px !important;
             }
         }
@@ -268,7 +269,7 @@
                 </div>
             </a>
             <div class="d-flex align-items-center gap-2 nav-actions">
-                <button onclick="window.print()" class="btn btn-outline-light btn-sm rounded-pill px-3 border-opacity-25 d-none d-sm-inline-block">
+                <button onclick="window.print()" class="btn btn-outline-light btn-sm rounded-pill px-3 border-opacity-25">
                     <i class="fa-solid fa-print me-1"></i> Print
                 </button>
                 <button onclick="exportToCSV()" class="btn btn-success btn-sm rounded-pill px-3 fw-bold">
