@@ -217,6 +217,34 @@
         .print-header {
             display: none;
         }
+
+        /* Mobile Navigation Responsiveness */
+        @media (max-width: 576px) {
+            .top-nav {
+                padding: 10px 12px !important;
+            }
+            .top-nav .container-fluid {
+                flex-direction: row !important;
+                flex-wrap: wrap !important;
+                gap: 8px !important;
+            }
+            .nav-logo {
+                font-size: 0.9rem !important;
+            }
+            .nav-logo small {
+                display: none !important;
+            }
+            .nav-actions {
+                width: 100%;
+                justify-content: flex-end;
+                gap: 6px !important;
+            }
+            .top-nav .btn {
+                padding: 5px 10px !important;
+                font-size: 0.75rem !important;
+                border-radius: 20px !important;
+            }
+        }
     </style>
 </head>
 <body>
@@ -231,7 +259,7 @@
 
     <!-- Synapse Navigation Bar -->
     <nav class="top-nav sticky-top no-print">
-        <div class="container-fluid px-3 px-md-4 d-flex justify-content-between align-items-center">
+        <div class="container-fluid px-3 px-md-4 d-flex justify-content-between align-items-center flex-wrap gap-2">
             <a class="nav-logo brand-orbitron d-flex align-items-center gap-2" href="index.html">
                 <i class="fa-solid fa-graduation-cap text-glow-blue"></i>
                 <div>
@@ -239,15 +267,15 @@
                     <small class="text-light fw-semibold d-none d-sm-block fs-7" style="font-size: 0.75rem; color: #cbd5e1;">Admin Analytics Portal</small>
                 </div>
             </a>
-            <div class="d-flex gap-2">
+            <div class="d-flex align-items-center gap-2 nav-actions">
                 <button onclick="window.print()" class="btn btn-outline-light btn-sm rounded-pill px-3 border-opacity-25 d-none d-sm-inline-block">
-                    <i class="fa-solid fa-print me-1"></i> Print / PDF
+                    <i class="fa-solid fa-print me-1"></i> Print
                 </button>
                 <button onclick="exportToCSV()" class="btn btn-success btn-sm rounded-pill px-3 fw-bold">
                     <i class="fa-solid fa-file-excel me-1"></i> CSV
                 </button>
                 <a href="transport.html" class="btn btn-neon-glow btn-sm">
-                    <i class="fa-solid fa-pen-to-square me-1"></i> Survey Form
+                    <i class="fa-solid fa-pen-to-square me-1"></i> Survey
                 </a>
                 <button onclick="logoutAdmin()" id="logoutBtn" class="btn btn-outline-danger btn-sm rounded-pill px-3 fw-bold d-none">
                     <i class="fa-solid fa-right-from-bracket me-1"></i> Logout
