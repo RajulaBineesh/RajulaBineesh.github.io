@@ -225,7 +225,7 @@
     <div class="print-header">
         <h2>SABTMHSS THAYINERI</h2>
         <h3>Student Transport Analytics & Master Report</h3>
-        <p>Rajula Bineesh — High School Transport Department | Report Date: <span id="print-date"></span></p>
+        <p>Rajula P — High School Transport Department | Report Date: <span id="print-date"></span></p>
         <hr>
     </div>
 
@@ -398,12 +398,12 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Timestamp</th>
                             <th>Student Name</th>
                             <th>Phone No</th>
                             <th>Class & Division</th>
                             <th>Transport Mode</th>
                             <th>Bus Number</th>
+                            <th>Timestamp</th>
                         </tr>
                     </thead>
                     <tbody id="studentTableBody">
@@ -531,12 +531,12 @@
                 tbody.innerHTML += `
                     <tr>
                         <td class="text-light fw-bold">${index + 1}</td>
-                        <td class="small" style="color: #cbd5e1;">${row.timestamp || '-'}</td>
                         <td class="fw-bold text-white">${row.studentName || '-'}</td>
                         <td class="fw-semibold text-light">${row.phoneNo && row.phoneNo !== 'N/A' ? '<i class="fa-solid fa-phone text-info me-1"></i>' + row.phoneNo : '-'}</td>
                         <td><span class="badge bg-dark border border-secondary text-light">${row.classGrade || '-'} - Div ${row.division || '-'}</span></td>
                         <td><span class="badge ${badgeClass} px-3 py-2 fw-semibold">${row.transportMode || '-'}</span></td>
                         <td class="fw-semibold">${row.busNumber && row.busNumber !== 'N/A' ? '<i class="fa-solid fa-bus text-glow-blue me-1"></i>' + row.busNumber : '<span style="color: #94a3b8;">-</span>'}</td>
+                        <td class="small" style="color: #cbd5e1;">${row.timestamp || '-'}</td>
                     </tr>
                 `;
             });
@@ -548,9 +548,9 @@
                 return;
             }
 
-            let csv = 'Timestamp,Student Name,Phone Number,Class,Division,Transport Mode,Bus Number\n';
+            let csv = 'Student Name,Phone Number,Class,Division,Transport Mode,Bus Number,Timestamp\n';
             allStudentData.forEach(row => {
-                csv += `"${row.timestamp || ''}","${row.studentName || ''}","${row.phoneNo || ''}","${row.classGrade || ''}","${row.division || ''}","${row.transportMode || ''}","${row.busNumber || ''}"\n`;
+                csv += `"${row.studentName || ''}","${row.phoneNo || ''}","${row.classGrade || ''}","${row.division || ''}","${row.transportMode || ''}","${row.busNumber || ''}","${row.timestamp || ''}"\n`;
             });
 
             const blob = new Blob([csv], { type: 'text/csv' });
