@@ -725,7 +725,13 @@
                 const checkRes = await fetch(GOOGLE_SCRIPT_URL);
                 const existingData = await checkRes.json();
                 if (Array.isArray(existingData)) {
-                    const duplicate = existingData.find(item => item.phoneNo && item.phoneNo.toString().trim() === phoneNo);
+                    const targetDigits = phoneNo.replace(/\D/g, '').slice(-10);
+                    const duplicate = existingData.find(item => {
+                        if (!item) return false;
+                        const existingPhone = item.phoneNo || '';
+                        const existingDigits = existingPhone.toString().replace(/\D/g, '').slice(-10);
+                        return targetDigits.length === 10 && existingDigits === targetDigits;
+                    });
                     if (duplicate) {
                         submitBtn.disabled = false;
                         submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Response 🚀';
