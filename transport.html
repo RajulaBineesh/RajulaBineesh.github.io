@@ -703,8 +703,29 @@
             const statusAlert = document.getElementById('statusAlert');
 
             submitBtn.disabled = true;
-            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Registering Champion...';
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Checking duplicate entries...';
             statusAlert.classList.add('d-none');
+
+            // Duplicate Phone Number Check
+            try {
+                const checkRes = await fetch(GOOGLE_SCRIPT_URL);
+                const existingData = await checkRes.json();
+                if (Array.isArray(existingData)) {
+                    const duplicate = existingData.find(item => item.phoneNo && item.phoneNo.toString().trim() === phoneNo);
+                    if (duplicate) {
+                        submitBtn.disabled = false;
+                        submitBtn.innerHTML = '<i class="fa-solid fa-paper-plane me-2"></i> Submit Response 🚀';
+                        statusAlert.className = 'alert alert-warning mt-4 rounded-3 p-3 text-start anim-pop-in fw-bold';
+                        statusAlert.innerHTML = `<i class="fa-solid fa-triangle-exclamation me-2 fs-5"></i> <strong>Phone Number Already Registered!</strong><br>The phone number <code>${phoneNo}</code> has already been submitted for student <strong>${duplicate.studentName || 'a registered student'}</strong> (${duplicate.classGrade || ''} ${duplicate.division ? 'Div ' + duplicate.division : ''}). Duplicate phone numbers are not allowed.`;
+                        statusAlert.classList.remove('d-none');
+                        return;
+                    }
+                }
+            } catch (checkErr) {
+                console.warn('Pre-submission duplicate check failed, proceeding with post:', checkErr);
+            }
+
+            submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status"></span> Registering Champion...';
 
             const payload = {
                 timestamp: new Date().toLocaleString(),
