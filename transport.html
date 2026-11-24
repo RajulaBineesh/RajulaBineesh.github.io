@@ -286,20 +286,37 @@
             100% { box-shadow: 0 0 25px rgba(209, 31, 183, 0.6); border-color: var(--poster-pink); }
         }
 
-        /* Animated Kid Icons */
+        /* Animated Kid Icons with Distinct Vibrant Colors */
         .transport-icon {
             font-size: clamp(2.4rem, 5.5vw, 3rem);
             margin-bottom: 0.6rem;
-            color: var(--poster-blue);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.3s ease, filter 0.3s ease;
-            filter: drop-shadow(0 0 10px rgba(31, 193, 209, 0.7));
             display: inline-block;
         }
 
-        .icon-walk { animation: kidWalkWiggle 2.5s infinite ease-in-out; }
-        .icon-cycle { animation: kidCycleFloat 3s infinite ease-in-out; }
-        .icon-car { animation: kidCarVroom 2.2s infinite ease-in-out; }
-        .icon-bus { animation: kidBusBounce 2.8s infinite ease-in-out; }
+        .icon-walk {
+            color: #10b981; /* Vibrant Emerald Green */
+            filter: drop-shadow(0 0 12px rgba(16, 185, 129, 0.8));
+            animation: kidWalkWiggle 2.5s infinite ease-in-out;
+        }
+
+        .icon-cycle {
+            color: #f59e0b; /* Bright Amber Yellow */
+            filter: drop-shadow(0 0 12px rgba(245, 158, 11, 0.8));
+            animation: kidCycleFloat 3s infinite ease-in-out;
+        }
+
+        .icon-car {
+            color: #d11fb7; /* Hot Neon Pink */
+            filter: drop-shadow(0 0 12px rgba(209, 31, 183, 0.8));
+            animation: kidCarVroom 2.2s infinite ease-in-out;
+        }
+
+        .icon-bus {
+            color: #1fc1d1; /* Electric Cyan */
+            filter: drop-shadow(0 0 12px rgba(31, 193, 209, 0.8));
+            animation: kidBusBounce 2.8s infinite ease-in-out;
+        }
 
         @keyframes kidWalkWiggle {
             0%, 100% { transform: translateY(0) rotate(0deg); }
