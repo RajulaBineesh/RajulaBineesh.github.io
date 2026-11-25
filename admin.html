@@ -493,9 +493,14 @@
 
         <!-- Student Data Table -->
         <div class="synapse-card">
-            <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
                 <h5 class="fw-bold text-white mb-0"><i class="fa-solid fa-list-check me-2 text-glow-blue"></i> Student Master Records</h5>
-                <span class="badge bg-dark border border-secondary text-light px-3 py-2">Showing <strong id="record-count" class="text-glow-blue">0</strong> records</span>
+                <div class="d-flex align-items-center gap-2">
+                    <button onclick="clearAllTestData()" class="btn btn-sm btn-outline-danger rounded-pill px-3 fw-semibold no-print" title="Delete all test submissions from Google Sheet">
+                        <i class="fa-solid fa-broom me-1"></i> Clear All Test Data
+                    </button>
+                    <span class="badge bg-dark border border-secondary text-light px-3 py-2">Showing <strong id="record-count" class="text-glow-blue">0</strong> records</span>
+                </div>
             </div>
 
             <div class="table-responsive">
@@ -509,11 +514,12 @@
                             <th>Transport Mode</th>
                             <th>Bus Number</th>
                             <th>Timestamp</th>
+                            <th class="no-print text-center">Action</th>
                         </tr>
                     </thead>
                     <tbody id="studentTableBody">
                         <tr>
-                            <td colspan="7" class="text-center text-light py-5">
+                            <td colspan="8" class="text-center text-light py-5">
                                 <i class="fa-solid fa-spinner fa-spin me-2 fs-4 text-glow-blue"></i> Fetching live records from SABTMHSS Google Sheet...
                             </td>
                         </tr>
@@ -617,7 +623,7 @@
             if (data.length === 0) {
                 tbody.innerHTML = `
                     <tr>
-                        <td colspan="7" class="text-center text-light py-5">
+                        <td colspan="8" class="text-center text-light py-5">
                             <i class="fa-solid fa-folder-open fs-2 mb-2 d-block text-info"></i>
                             <strong style="color: #f8fafc;">No student records found.</strong><br>
                             <small style="color: #cbd5e1;">Submissions from students will appear here automatically.</small>
@@ -633,18 +639,104 @@
                 else if (row.transportMode === 'Walking') badgeClass = 'bg-primary text-white';
                 else if (row.transportMode === 'Private Vehicle') badgeClass = 'bg-warning text-dark';
 
+                const safeName = (row.studentName || '').replace(/'/g, "\\'");
+                const safePhone = (row.phoneNo || '').toString().replace(/'/g, "\\'");
+                const safeTime = (row.timestamp || '').toString().replace(/'/g, "\\'");
+
                 tbody.innerHTML += `
                     <tr>
                         <td class="text-light fw-bold">${index + 1}</td>
                         <td class="fw-bold text-white">${row.studentName || '-'}</td>
-                        <td class="fw-semibold text-light">${row.phoneNo && row.phoneNo !== 'N/A' ? '<i class="fa-solid fa-phone text-info me-1"></i>' + row.phoneNo : '-'}</td>
+                        <td class="fw-semibold text-light">${row.phoneNo && row.phoneNo !== 'N/A' && row.phoneNo !== '-' ? '<i class="fa-solid fa-phone text-info me-1"></i>' + row.phoneNo : '-'}</td>
                         <td><span class="badge bg-dark border border-secondary text-light">${row.classGrade || '-'} - Div ${row.division || '-'}</span></td>
                         <td><span class="badge ${badgeClass} px-3 py-2 fw-semibold">${row.transportMode || '-'}</span></td>
                         <td class="fw-semibold">${row.busNumber && row.busNumber !== 'N/A' ? '<i class="fa-solid fa-bus text-glow-blue me-1"></i>' + row.busNumber : '<span style="color: #94a3b8;">-</span>'}</td>
                         <td class="small" style="color: #cbd5e1;">${row.timestamp || '-'}</td>
+                        <td class="no-print text-center">
+                            <button class="btn btn-sm btn-outline-danger px-2 py-1 rounded-pill" onclick="deleteStudentRecord('${safePhone}', '${safeName}', '${safeTime}')" title="Delete record from Google Sheet">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </td>
                     </tr>
                 `;
             });
+        }
+
+        async function deleteStudentRecord(phoneNo, studentName, timestamp) {
+            const displayName = studentName || 'this student';
+            const displayPhone = phoneNo && phoneNo !== '-' ? ` (${phoneNo})` : '';
+            if (!confirm(`Are you sure you want to permanently delete the record for:\n"${displayName}"${displayPhone}?\n\nThis will remove it directly from your Google Sheet.`)) {
+                return;
+            }
+
+            const refreshBtn = document.getElementById('refreshBtn');
+            const originalBtnText = refreshBtn.innerHTML;
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Deleting...';
+
+            try {
+                const payload = {
+                    action: 'delete',
+                    phoneNo: phoneNo,
+                    studentName: studentName,
+                    timestamp: timestamp
+                };
+
+                const res = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify(payload)
+                });
+
+                const result = await res.json();
+
+                if (result.result === 'success') {
+                    alert(`✅ Record for "${displayName}" deleted successfully!`);
+                    await fetchLiveData();
+                } else {
+                    alert(`❌ Could not delete record: ${result.error || 'Unknown error'}`);
+                    refreshBtn.disabled = false;
+                    refreshBtn.innerHTML = originalBtnText;
+                }
+            } catch (err) {
+                console.error('Delete error:', err);
+                alert('⚠️ Error contacting Google Sheets. Please ensure your Apps Script is updated with the latest code.');
+                refreshBtn.disabled = false;
+                refreshBtn.innerHTML = originalBtnText;
+            }
+        }
+
+        async function clearAllTestData() {
+            if (!confirm('⚠️ CLEAR ALL TEST DATA?\n\nAre you sure you want to permanently delete ALL student test records from your Google Sheet?\n\nThis will reset your sheet and dashboard to 0 records so you can start fresh.')) {
+                return;
+            }
+
+            const refreshBtn = document.getElementById('refreshBtn');
+            const originalBtnText = refreshBtn.innerHTML;
+            refreshBtn.disabled = true;
+            refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Clearing all...';
+
+            try {
+                const res = await fetch(GOOGLE_SCRIPT_URL, {
+                    method: 'POST',
+                    body: JSON.stringify({ action: 'clearAll' })
+                });
+
+                const result = await res.json();
+
+                if (result.result === 'success') {
+                    alert('✅ All test records have been deleted from your Google Sheet!');
+                    await fetchLiveData();
+                } else {
+                    alert(`❌ Could not clear records: ${result.error || 'Unknown error'}`);
+                    refreshBtn.disabled = false;
+                    refreshBtn.innerHTML = originalBtnText;
+                }
+            } catch (err) {
+                console.error('Clear error:', err);
+                alert('⚠️ Error contacting Google Sheets. Please ensure your Apps Script is updated with the latest code.');
+                refreshBtn.disabled = false;
+                refreshBtn.innerHTML = originalBtnText;
+            }
         }
 
         function exportToCSV() {
