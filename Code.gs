@@ -81,19 +81,6 @@ function doPost(e) {
     }
 
     // -------------------------------------------------------------
-    // ACTION: CLEAR ALL DATA ROWS (KEEP HEADER)
-    // -------------------------------------------------------------
-    if (data.action === "clearAll") {
-      var lastRow = sheet.getLastRow();
-      if (lastRow > 1) {
-        sheet.deleteRows(2, lastRow - 1);
-      }
-      return ContentService
-        .createTextOutput(JSON.stringify({ "result": "success", "message": "All data cleared successfully" }))
-        .setMimeType(ContentService.MimeType.JSON);
-    }
-
-    // -------------------------------------------------------------
     // DEFAULT ACTION: NEW STUDENT SUBMISSION
     // -------------------------------------------------------------
     var headers = [];

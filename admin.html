@@ -493,14 +493,9 @@
 
         <!-- Student Data Table -->
         <div class="synapse-card">
-            <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+            <div class="d-flex justify-content-between align-items-center mb-3">
                 <h5 class="fw-bold text-white mb-0"><i class="fa-solid fa-list-check me-2 text-glow-blue"></i> Student Master Records</h5>
-                <div class="d-flex align-items-center gap-2">
-                    <button onclick="clearAllTestData()" class="btn btn-sm btn-outline-danger rounded-pill px-3 fw-semibold no-print" title="Delete all test submissions from Google Sheet">
-                        <i class="fa-solid fa-broom me-1"></i> Clear All Test Data
-                    </button>
-                    <span class="badge bg-dark border border-secondary text-light px-3 py-2">Showing <strong id="record-count" class="text-glow-blue">0</strong> records</span>
-                </div>
+                <span class="badge bg-dark border border-secondary text-light px-3 py-2">Showing <strong id="record-count" class="text-glow-blue">0</strong> records</span>
             </div>
 
             <div class="table-responsive">
@@ -699,40 +694,6 @@
                 }
             } catch (err) {
                 console.error('Delete error:', err);
-                alert('⚠️ Error contacting Google Sheets. Please ensure your Apps Script is updated with the latest code.');
-                refreshBtn.disabled = false;
-                refreshBtn.innerHTML = originalBtnText;
-            }
-        }
-
-        async function clearAllTestData() {
-            if (!confirm('⚠️ CLEAR ALL TEST DATA?\n\nAre you sure you want to permanently delete ALL student test records from your Google Sheet?\n\nThis will reset your sheet and dashboard to 0 records so you can start fresh.')) {
-                return;
-            }
-
-            const refreshBtn = document.getElementById('refreshBtn');
-            const originalBtnText = refreshBtn.innerHTML;
-            refreshBtn.disabled = true;
-            refreshBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Clearing all...';
-
-            try {
-                const res = await fetch(GOOGLE_SCRIPT_URL, {
-                    method: 'POST',
-                    body: JSON.stringify({ action: 'clearAll' })
-                });
-
-                const result = await res.json();
-
-                if (result.result === 'success') {
-                    alert('✅ All test records have been deleted from your Google Sheet!');
-                    await fetchLiveData();
-                } else {
-                    alert(`❌ Could not clear records: ${result.error || 'Unknown error'}`);
-                    refreshBtn.disabled = false;
-                    refreshBtn.innerHTML = originalBtnText;
-                }
-            } catch (err) {
-                console.error('Clear error:', err);
                 alert('⚠️ Error contacting Google Sheets. Please ensure your Apps Script is updated with the latest code.');
                 refreshBtn.disabled = false;
                 refreshBtn.innerHTML = originalBtnText;
