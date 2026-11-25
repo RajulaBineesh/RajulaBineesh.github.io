@@ -42,24 +42,23 @@ function doPost(e) {
       var targetPhone = (data.phoneNo || "").toString().replace(/\D/g, "");
       if (targetPhone.length > 10) targetPhone = targetPhone.slice(-10);
       var targetName = (data.studentName || "").toString().trim().toLowerCase();
-      var targetTime = (data.timestamp || "").toString().trim();
       
       var values = sheet.getRange(2, 1, lastRow - 1, sheet.getLastColumn()).getValues();
       var deleted = false;
       
       // Traverse bottom-up so row deletion does not disturb indexing
       for (var r = values.length - 1; r >= 0; r--) {
-        var rPhone = (phoneCol !== -1 && values[r][phoneCol]) ? values[r][phoneCol].toString().replace(/\D/g, "") : "";
-        if (rPhone.length > 10) rPhone = rPhone.slice(-10);
-        var rName = (nameCol !== -1 && values[r][nameCol]) ? values[r][nameCol].toString().trim().toLowerCase() : "";
-        var rTime = (timeCol !== -1 && values[r][timeCol]) ? values[r][timeCol].toString().trim() : "";
+        var rowValues = values[r];
+        var rowText = rowValues.map(function(c) { return c ? c.toString().toLowerCase() : ""; }).join(" ");
+        var rowDigits = rowValues.map(function(c) { return c ? c.toString().replace(/\D/g, "") : ""; }).join(" ");
         
         var match = false;
-        if (targetPhone && targetPhone.length === 10 && rPhone === targetPhone) {
+        // Match by 10-digit phone number anywhere in row
+        if (targetPhone && targetPhone.length >= 10 && rowDigits.indexOf(targetPhone) !== -1) {
           match = true;
-        } else if (targetName && targetTime && rName === targetName && rTime === targetTime) {
-          match = true;
-        } else if (targetName && targetPhone && rName === targetName && rPhone === targetPhone) {
+        }
+        // Fallback: match by student name if phone number was missing or '-'
+        else if (targetName && targetName.length > 1 && rowText.indexOf(targetName) !== -1) {
           match = true;
         }
         
